@@ -128,7 +128,7 @@ for_window [instance="dropdown"] floating enable
 for_window [instance="dropdown"] resize set 1920 400
 for_window [instance="dropdown"] move position 0 0
 for_window [instance="dropdown"] move scratchpad
-exec alacritty --class "dropdown" --config-file ~/.config/alacritty/drop.yml -e libinput-gestures-setup start &
+exec alacritty --class "dropdown" --config-file ~/.config/alacritty/drop.yml
 
 # ncmpcpp
 for_window [instance="ncmpcpp"] floating enable
