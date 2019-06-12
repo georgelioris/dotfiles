@@ -1,0 +1,2 @@
+#!/bin/bash
+xdotool set_desktop $(expr $(expr $(xdotool get_desktop) + 1) % $(xdotool get_num_desktops))

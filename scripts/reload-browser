@@ -1,0 +1,5 @@
+#!/bin/sh
+
+DIR="pwd"
+TITLE="cat $DIR/index.html | grep title | sed 's|<title>||g; s|</title>||g' | head -n 1"
+ls *.html *.css *.js *.jsx | entr xdotool search  --name "$TITLE" windowactivate --sync key F5
