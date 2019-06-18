@@ -206,7 +206,7 @@ bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'Do you really want to exit i
 # kill focused window
 bindsym Mod1+q kill
 #binding for scratchpad dropdown
-bindsym Mod1+z	[instance="dropdown"] scratchpad show;
+bindsym Mod1+z	exec ~/bin/scripts/dropterm.sh; [instance="dropdown"] scratchpad show;
 
 bindsym Mod1+w exec chromium
 bindsym Mod1+Shift+w exec chromium --incognito
