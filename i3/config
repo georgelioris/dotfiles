@@ -31,6 +31,7 @@ set $text-color #33b2b2
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 for_window [class="^.*"] border pixel 0
+for_window [instance="border"] border pixel 0
 floating_maximum_size -1 x 900
 # set
 smart_gaps on
@@ -64,7 +65,7 @@ set $right l
 floating_modifier Mod1
 
 # start a terminal
-bindsym Mod1+Return exec alacritty
+bindsym Mod1+Return exec alacritty --class "border"
 
 # change focus
 bindsym Mod1+$left focus left
@@ -134,6 +135,7 @@ exec alacritty --class "dropdown" --config-file ~/.config/alacritty/drop.yml
 for_window [instance="ncmpcpp"] floating enable
 for_window [instance="ncmpcpp"] resize set 1600 800
 for_window [instance="ncmpcpp"] move position center
+for_window [instance="ncmpcpp"] move scratchpad
 for_window [instance="ncmpcpp"] border pixel 2
 
 set $space1 "1"
@@ -218,8 +220,7 @@ bindsym Mod1+F12 exec ~/bin/scripts/rofi-power.sh
 bindsym Mod1+e exec --no-startup-id alcritty -e vim
 bindsym Mod1+r exec thunar
 bindsym Mod1+d exec ~/bin/scripts/rofi.sh
-bindsym Mod1+m exec alacritty --class "ncmpcpp" -e ncmpcpp
-
+bindsym Mod1+m exec ~/bin/scripts/dropmusic.sh; [instance="ncmpcpp"] scratchpad show;
 ###################################################
 #                autostart                        #
 ###################################################

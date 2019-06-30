@@ -4,6 +4,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 path+=('/home/void/bin/scripts')
+path+=('/home/void/node_modules/.bin')
 export PATH
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -92,7 +93,7 @@ alias h="cd ~/"
 alias cod="cd ~/code && ls"
 alias js="cd ~/code/js && ls"
 alias dl="cd ~/Downloads"
-alias wall="cd ~/Pictures/Wallpapers"
+alias wall="ranger ~/Pictures/Wallpapers"
 alias pic="cd ~/Pictures"
 alias doc="cd ~/Documents"
 alias scrots="cd ~/Pictures/scrots"
@@ -111,7 +112,9 @@ alias yank="yank -- xsel -b"
 alias xclip="xclip -selection clipboard"
 alias wiki="$EDITOR ~/vimwiki/index.wiki"
 alias todo="$EDITOR ~/vimwiki/Todo.wiki"
+alias workout="$EDITOR ~/vimwiki/Workout.wiki"
 alias tmux="TERM=screen-256color tmux -f ~/.config/tmux/.tmux.conf"
+alias tmuxmain="TERM=screen-256color tmux new -s main"
 alias feh="feh --image-bg black -Z -."
 export FZF_DEFAULT_OPTS="--color=hl:221,hl+:220"
 #export MESA_GLSL_CACHE_DISABLE=true
