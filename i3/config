@@ -11,8 +11,9 @@
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
+#exec --no-startup-id ~/bin/scripts/set_monitors &
 font pango: Noto Sans 10
-client.focused          #304357 #304357 #304357 #304357   #304357
+client.focused          #dddddd #dddddd #dddddd #dddddd   #dddddd
 client.focused_inactive #252525 #252525 #252525 #252525   #252525
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
@@ -136,7 +137,7 @@ for_window [instance="ncmpcpp"] floating enable
 for_window [instance="ncmpcpp"] resize set 1600 800
 for_window [instance="ncmpcpp"] move position center
 for_window [instance="ncmpcpp"] move scratchpad
-for_window [instance="ncmpcpp"] border pixel 2
+for_window [instance="ncmpcpp"] border pixel 1
 
 set $space1 "1"
 set $space2 "2"
@@ -174,7 +175,7 @@ bindsym Mod1+Shift+0 move container to workspace 10
 assign [class="lxterminal"] workspace $space1
 
 # Same thing, but more precise (exact match instead of substring)
-assign [class="qutebrowser"] workspace $space2
+assign [class="code"] workspace $space2
 
 # Same thing, but with a beautiful arrow :)
 #assign [class=""] $space3
@@ -228,7 +229,9 @@ bindsym Mod1+m exec ~/bin/scripts/dropmusic.sh; [instance="ncmpcpp"] scratchpad 
 exec_always "setxkbmap -layout us,gr -option grp:rctrl_toggle,caps:escape"
 exec_always "xinput --set-prop 'SYNA2B2C:01 06CB:7F27 Touchpad' 'libinput Tapping Enabled' 1"
 exec_always ~/.fehbg &
+exec_always set_monitors &
 exec_always ~/.config/polybar/launch.sh &
+exec_always --no-startup-id flashfocus &
 exec --no-startup-id compton --config ~/.config/compton/compton.conf &
 exec --no-startup-id nm-applet &
 exec --no-startup-id pa-applet &
