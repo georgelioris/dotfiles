@@ -3,29 +3,32 @@ set number
 set nocompatible
 set nowrap
 set termguicolors
-filetype off
 filetype plugin indent on
 let mapleader = " "
 set ruler
 set showcmd
-set tabstop=4
+set tabstop=2
+set shiftwidth=0
 
 " Vim Plug
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'easymotion/vim-easymotion'
-Plug 'pangloss/vim-javascript'
+Plug 'othree/yajs.vim'
+"Plug 'pangloss/vim-javascript'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'chriskempson/base16-vim'
+Plug 'honza/vim-snippets'
+"Plug 'xabikos/vscode-react'
+Plug 'tpope/vim-fugitive'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'jiangmiao/auto-pairs'
+Plug 'larsbs/vimterial_dark'
 Plug 'mhinz/vim-startify'
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'wokalski/autocomplete-flow'
-  " For func argument completion
-"Plug 'Shougo/neosnippet'
-"Plug 'Shougo/neosnippet-snippets'
-"Plug 'rafi/awesome-vim-colorschemes'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'ervandew/supertab',
 Plug 'ayu-theme/ayu-vim'
 Plug 'mxw/vim-jsx'
 Plug 'Shutnik/jshint2.vim'
@@ -37,12 +40,13 @@ Plug 'w0rp/ale'
 " Initialize plugin system
 call plug#end()
 
+
 " Arrow binds
 nnoremap <Left> :echoe "Use h"<CR>
 nnoremap <Right> :echoe "Use l"<CR>
 nnoremap <Up> :echoe "Use k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
-
+nnoremap <silent> , :nohlsearch<CR>
 " Vim Ctrlp
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 let g:ctrlp_map = '<c-p>'
@@ -78,12 +82,18 @@ map <C-n> :NERDTreeToggle %<CR>
 
 " Wiki setup
 map <leader>f :Goyo \| set wrap \| set linebreak<CR>
+let g:goyo_width = 85
 
 " Sell checking
 map <leader>o :setlocal spell! spelllang=en_us<CR>
 imap <c-f> <c-g>u<Esc>[s1z=`]a<c-g>u
 nmap <c-f> [s1z=<c-o>
 set autoread
+
+"Split bottom right
+set splitbelow splitright
+
+"set wildmode=longest,list,full
 
 " Themes
 let g:airline_powerline_fonts = 1
@@ -96,6 +106,7 @@ if exists('+termguicolors')
   let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
+
 "Js
 let g:ale_linters = {
 \   'javascript': ['eslint'],
@@ -108,34 +119,38 @@ let g:ale_fixers = {
 syntax enable
 let g:ale_fix_on_save = 1
 let g:airline#extensions#ale#enabled = 1
-highlight ALEWarning ctermbg=DarkMagenta
 map <leader>a :ALEToggle <CR>
-"let g:neosnippet#enable_completed_snippet = 1
-" deoplete
-"let g:deoplete#enable_at_startup = 1
-" use tab to forward cycle
-"inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-"" use tab to backward cycle
-"inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
-"" Close the documentation window when completion is done
-"autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
- "" Auto goyo on markdown
-"" autocmd Filetype vimwiki :Goyo
-"function! s:auto_goyo()
-"    if &ft == 'vimwiki'
-"        Goyo 80
-"    elseif exists('#goyo')
-"        let bufnr = bufnr('%')
-"        Goyo!
-"        execute 'b '.bufnr
-"    endif
-"endfunction
-"
-"" augroup VimWikiColor
-""   au!
-""   autocmd FileType vimwiki colorscheme deep-space
-"" augroup END
-"" augroup Goyo
-""   au!
-"    autocmd BufEnter * call s:auto_goyo()
-"" augroup END
+let g:ale_list_window_size = 5
+let g:ale_set_loclist = 1
+let g:ale_set_quickfix = 0
+let g:ale_sign_column_always = 1
+highlight clear SignColumn
+
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+
+"Use Tab for snippets
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+
+let g:coc_snippet_next = '<tab>'
+
+"let g:SuperTabContextDefaultCompletionType = "<c-n>"
+"let g:ale_echo_msg_error_str = 'E'
+"let g:ale_echo_msg_warning_str = 'W'
+"let g:ale_echo_msg_format = '[%severity%] %s'
+"let g:ale_loclist_msg_format = '%s '
+"let g:ale_set_loclist = 1
+"let g:ale_set_quickfix = 0
+"let g:ale_open_list = 1
+"let g:ale_list_vertical = 1
+"let g:ale_list_window_size = 80

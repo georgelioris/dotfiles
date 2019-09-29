@@ -9,7 +9,8 @@ export PATH
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="michelebologna"
+#ZSH_THEME="michelebologna"
+ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -56,16 +57,39 @@ ZSH_THEME="michelebologna"
 plugins=(git)
 plugins+=(k)
 plugins+=(zsh-syntax-highlighting)
+plugins+=(colored-man-pages)
+plugins+=(vi-mode)
 
 source $ZSH/oh-my-zsh.sh
-
+export SPACESHIP_CHAR_SYMBOL=' '
+export SPACESHIP_NODE_DEFAULT_VERSION=$(node -v)
+export SPACESHIP_EXEC_TIME_SHOW=false
+export SPACESHIP_PACKAGE_SHOW=false
+export SPACESHIP_DIR_PREFIX=""
+export SPACESHIP_VI_MODE_COLOR=grey
+export SPACESHIP_VI_MODE_INSERT=""
+export SPACESHIP_PROMPT_ORDER=(
+  #time          # Time stamps section
+	vi_mode
+  user          # Username section
+  dir           # Current directory section
+  host          # Hostname section
+  git           # Git section (git_branch + git_status)
+  node          # Node.js section
+  line_sep      # Line break
+  jobs          # Background jobs indicator
+  exit_code     # Exit code section
+  char          # Prompt character
+	)
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
-export EDITOR='nvim'
+export VISUAL='nvim'
+export EDITOR="$VISUAL"
+export KEYTIMEOUT=1
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
@@ -116,6 +140,9 @@ alias workout="$EDITOR ~/vimwiki/Workout.wiki"
 alias tmux="TERM=screen-256color tmux -f ~/.config/tmux/.tmux.conf"
 alias tmuxmain="TERM=screen-256color tmux new -s main"
 alias feh="feh --image-bg black -Z -."
+alias andromeda="cd /run/media/void/ANDROMEDA"
+alias calypso="cd /run/media/void/CALYPSO"
+alias ta="tmux a -t main"
 export FZF_DEFAULT_OPTS="--color=hl:221,hl+:220"
 #export MESA_GLSL_CACHE_DISABLE=true
 
@@ -124,3 +151,11 @@ cf() { cd "$(du ~/code --exclude="node_*" --exclude=".*" --exclude={misc,public}
 copy() { cp -v "$1" "$(awk '{print $1}'  ~/.config/bmdirs | fzf | sed "s|~|$HOME|")" ; }
 cdf() { cd "$(awk '{print $1}'  ~/.config/bmdirs | fzf | sed "s|~|$HOME|")" ; }
 se() { $EDITOR "$( du -a ~/.config ~/bin/scripts --exclude="Code*" --exclude={yarn,chromium,skypeforlinux,GIMP,discord,Electron,filezilla,deluge} | awk '{print $2}' | sed "s|/home/void/\.config|>|g" | fzf | sed "s|>|/home/void/.config|")" ; }
+rcd () { ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR" ; }
+
+bindkey -s '^o' 'rcd\n'
+bindkey -v
+
+# Edit line in vim with ctrl-e
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
