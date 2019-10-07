@@ -9,6 +9,8 @@ set ruler
 set showcmd
 set tabstop=2
 set shiftwidth=0
+set foldmethod=syntax
+set foldlevelstart=99
 set fcs=eob:\  " Hide EndOfBuffer fillchar
 
 " Vim Plug
@@ -49,6 +51,10 @@ nnoremap <silent> <leader>t :nohlsearch<CR>
 nnoremap <leader>r :registers<CR>
 nnoremap M :!node '%:p'<CR>
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <leader><tab> za
+nnoremap <leader>q :quit<CR>
+nnoremap <leader>w :write<CR>
+map <C-n> :NERDTreeToggle %<CR>
 
 " Move between panes
 nnoremap <C-J> <C-W><C-J>
@@ -68,9 +74,6 @@ map <Leader>h <Plug>(easymotion-linebackward)
 
 " Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
-
-" NERDTREE
-map <leader>n :NERDTreeToggle %<CR>
 
 " Wiki setup
 map <leader>f :Goyo \| set wrap \| set linebreak<CR>
