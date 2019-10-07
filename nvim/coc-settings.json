@@ -1,0 +1,14 @@
+{
+	"snippets.ultisnips.directories": [
+  "UltiSnips",
+  "gosnippets/UltiSnips"
+],
+  "snippets.extends": {
+    "javascriptreact": ["javascript"],
+    "typescriptreact": ["javascript"],
+    "typescript": ["javascript"]
+		},
+		"suggest.noselect": false,
+		"suggest.maxCompleteItemCount": 10,
+    "javascript.validate.enable": false
+}
