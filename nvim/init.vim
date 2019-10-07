@@ -12,6 +12,7 @@ set shiftwidth=0
 set foldmethod=syntax
 set foldlevelstart=99
 set fcs=eob:\  " Hide EndOfBuffer fillchar
+set mouse=a
 
 " Vim Plug
 call plug#begin('~/.local/share/nvim/plugged')
