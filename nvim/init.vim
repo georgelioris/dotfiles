@@ -9,14 +9,18 @@ set ruler
 set showcmd
 set tabstop=2
 set shiftwidth=0
-set foldmethod=syntax
+set foldmethod=indent
 set foldlevelstart=99
+set cursorline
 set fcs=eob:\  " Hide EndOfBuffer fillchar
 set mouse=a
+set ignorecase
+set smartcase
 
 " Vim Plug
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'scrooloose/nerdtree'
+Plug 'chriskempson/base16-vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'othree/yajs.vim'
 Plug 'vim-airline/vim-airline'
