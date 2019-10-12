@@ -11,7 +11,6 @@ set tabstop=2
 set shiftwidth=0
 set foldmethod=indent
 set foldlevelstart=99
-set cursorline
 set fcs=eob:\  " Hide EndOfBuffer fillchar
 set mouse=a
 set ignorecase
@@ -21,10 +20,10 @@ set smartcase
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'chriskempson/base16-vim'
+Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'easymotion/vim-easymotion'
 Plug 'othree/yajs.vim'
 Plug 'vim-airline/vim-airline'
-Plug 'cseelus/vim-colors-tone'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-fugitive'
@@ -43,23 +42,35 @@ Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale'
 "Plug 'pangloss/vim-javascript'
 "Plug 'xabikos/vscode-react'
-"Plug 'ervandew/supertab',
 " Initialize plugin system
 call plug#end()
 
 " Custom Mappings
+nmap Q <Nop>
+noremap Y y$
 inoremap <C-v> <ESC>"+pa
 vnoremap <C-c> "+y
 vnoremap <C-d> "+d
-nnoremap <leader>a :ALEToggle <CR>
-nnoremap <silent> <leader>t :nohlsearch<CR>
-nnoremap <leader>r :registers<CR>
 nnoremap M :!node '%:p'<CR>
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-nnoremap <leader><tab> za
+map <C-n> :NERDTreeToggle %<CR>
+nnoremap <tab> za
+nnoremap <silent> <leader>t :nohlsearch<CR>
+nnoremap <leader>a :ALEToggle<CR>
+nnoremap <leader>r :registers<CR>
 nnoremap <leader>q :quit<CR>
 nnoremap <leader>w :write<CR>
-map <C-n> :NERDTreeToggle %<CR>
+nnoremap <leader>x :xit<CR>
+noremap <leader>p :echo expand('%')<CR>
+noremap <leader>pp :let @+=expand('%') <Bar> :echo expand('%')<CR>
+nnoremap <leader>z :ALEToggleFixer<CR>
+nnoremap <leader><leader> <C-^>
+
+" Coc.nvim
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " Move between panes
 nnoremap <C-J> <C-W><C-J>
@@ -77,6 +88,8 @@ map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
 
+" MinimalNERDTree
+let g:NERDTreeMinimalUI = 1
 " Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
 
@@ -100,12 +113,12 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
+let g:airline_theme='zenburn'
 set background=dark
-syntax enable
 let g:airline_powerline_fonts = 1
 let ayucolor="dark"
-colorscheme ayu
-let g:airline_theme='ayu_dark'
+colorscheme base16-oceanicnext
+" let g:airline_theme='ayu_dark'
 
 " Vim Ctrlp
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -117,9 +130,7 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'some_bad_symbolic_links',
   \ }
-
 
 " Js Ale
 let g:ale_linters = {
@@ -129,7 +140,9 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['prettier'],
+\   'json': ['prettier']
 \}
+command! ALEToggleFixer execute "let g:ale_fix_on_save = get(g:, 'ale_fix_on_save', 0) ? 0 : 1"
 let g:ale_fix_on_save = 1
 let g:airline#extensions#ale#enabled = 1
 let g:ale_list_window_size = 5
@@ -138,9 +151,8 @@ let g:ale_set_quickfix = 0
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
-highlight ALEErrorSign  cterm=NONE ctermbg=NONE ctermfg=NONE gui=NONE guibg=NONE guifg=#FF8F40
+highlight ALEErrorSign guibg=#22282E guifg=#E1333D
 highlight clear ALEWarningSign
-highlight clear SignColumn
 
 " Use Tab for snippets
 inoremap <silent><expr> <TAB>
@@ -165,13 +177,18 @@ function! s:show_documentation()
   endif
 endfunction
 
-"let g:SuperTabContextDefaultCompletionType = "<c-n>"
-"let g:ale_echo_msg_error_str = 'E'
-"let g:ale_echo_msg_warning_str = 'W'
-"let g:ale_echo_msg_format = '[%severity%] %s'
-"let g:ale_loclist_msg_format = '%s '
-"let g:ale_set_loclist = 1
-"let g:ale_set_quickfix = 0
-"let g:ale_open_list = 1
-"let g:ale_list_vertical = 1
-"let g:ale_list_window_size = 80
+" Preview Image with ueberzug
+au BufRead *.png,*.jpg,*.jpeg :call DisplayImage()
+
+function! DisplayImage()
+execute '!ueimg %'
+:bp | :bw #
+endfunction
+
+" Colorscheme customizations
+highlight Normal guibg=#0A0C0E
+"hi NormalNC  guibg=#22282E
+"autocmd FocusLost,WinLeave * :hi Normal guibg=#0a0c0e
+autocmd FocusLost,WinLeave * set nocursorline
+autocmd FocusGained,BufEnter,VimEnter,WinEnter * :hi Normal guibg=#0a0c0e
+autocmd FocusGained,BufEnter,VimEnter,WinEnter * setlocal cursorline

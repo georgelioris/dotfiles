@@ -38,7 +38,7 @@ floating_maximum_size -1 x 900
 smart_gaps on
 gaps inner 8
 gaps outer 0
-set $term alacritty
+set $term alacritty --config-file ~/.config/alacritty/alacritty.yml
 #workspace $space1 gaps inner 0
 #workspace $space1 gaps outer 0
 #workspace $space2 gaps inner 0
@@ -66,7 +66,7 @@ set $right l
 floating_modifier Mod1
 
 # start a terminal
-bindsym Mod1+Return exec alacritty --class "border"
+bindsym Mod1+Return exec $term --class "border"
 
 # change focus
 bindsym Mod1+$left focus left
@@ -130,22 +130,26 @@ for_window [instance="dropdown"] floating enable
 for_window [instance="dropdown"] resize set 1920 400
 for_window [instance="dropdown"] move position 0 0
 for_window [instance="dropdown"] move scratchpad
-exec alacritty --class "dropdown" --config-file ~/.config/alacritty/drop.yml
+exec $term --class "dropdown" --config-file ~/.config/$term/drop.yml
 
-# ncmpcpp
-for_window [instance="ncmpcpp"] floating enable
-for_window [instance="ncmpcpp"] resize set 1600 800
-for_window [instance="ncmpcpp"] move position center
-for_window [instance="ncmpcpp"] move scratchpad
-for_window [instance="ncmpcpp"] border pixel 1
+# Dropdown Music Player
+for_window [instance=$music] floating enable
+for_window [instance=$music] resize set 1400 900
+for_window [instance=$music] move position center
+for_window [instance=$music] move scratchpad
+for_window [instance=$music] border pixel 1
 
+# Set Music Player
+set $music "spotify"
+set $musicscript "~/bin/scripts/dropspot.sh"
+
+# Ws mappings
 set $space1 "1"
 set $space2 "2"
 set $space3 "3"
 set $space4 "4"
 set $space5 "5"
 set $space6 "6"
-
 
 # switch to workspace
 bindsym Mod1+1 workspace $space1
@@ -171,21 +175,12 @@ bindsym Mod1+Shift+8 move container to workspace 8
 bindsym Mod1+Shift+9 move container to workspace 9
 bindsym Mod1+Shift+0 move container to workspace 10
 
-# Assign URxvt terminals to workspace 2
-assign [class="lxterminal"] workspace $space1
 
-# Same thing, but more precise (exact match instead of substring)
+# Assign VSCode to ws2
 assign [class="code"] workspace $space2
 
-# Same thing, but with a beautiful arrow :)
-#assign [class=""] $space3
-
-# Assignment to a named workspace
+# Assign discord to ws4
 assign [class="discord"] workspace $space4
-
-# Start urxvt -name irssi
-#assign [class="^URxvt$" instance="^irssi$"] → 3
-
 
 ###################################################
 #                resize                           #
@@ -208,28 +203,32 @@ bindsym Mod1+Shift+r restart
 bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'Do you really want to exit i3?' -b 'Yes, exit i3' 'i3-msg exit'"
 # kill focused window
 bindsym Mod1+q kill
-#binding for scratchpad dropdown
-bindsym Mod1+z	exec ~/bin/scripts/dropterm.sh; [instance="dropdown"] scratchpad show;
-
-bindsym Mod1+w exec chromium
-bindsym Mod1+Shift+w exec chromium --incognito
+# binding for scratchpad windows
+bindsym Mod1+z exec ~/bin/scripts/dropterm.sh; [instance="dropdown"] scratchpad show;
+bindsym Mod1+m exec $musicscript; [instance=$music] scratchpad show;
+# rofi menus
+bindsym Mod1+d exec ~/bin/scripts/rofi.sh
 bindsym Mod1+F7 exec ~/bin/rofi-wifi-menu/rofi-wifi-menu.sh
 bindsym Mod1+F8 exec ~/bin/scripts/prtsc.sh
-bindsym Mod1+F9 exec betterlockscreen -l dimblur
 bindsym Mod1+F10 exec ~/bin/scripts/monitor_layout.sh
 bindsym Mod1+F12 exec ~/bin/scripts/rofi-power.sh
-bindsym Mod1+e exec --no-startup-id alcritty -e vim
+# browser
+bindsym Mod1+w exec chromium
+bindsym Mod1+Shift+w exec chromium --incognito
+# lockscreen
+bindsym Mod1+F9 exec betterlockscreen -l dimblur
 bindsym Mod1+r exec thunar
-bindsym Mod1+d exec ~/bin/scripts/rofi.sh
-bindsym Mod1+m exec ~/bin/scripts/dropmusic.sh; [instance="ncmpcpp"] scratchpad show;
+
 ###################################################
 #                autostart                        #
 ###################################################
 
+# Kb layout switching and Caps mapped to ESC
 exec_always "setxkbmap -layout us,gr -option grp:rctrl_toggle,caps:escape"
+# Enable tap to click
 exec_always "xinput --set-prop 'SYNA2B2C:01 06CB:7F27 Touchpad' 'libinput Tapping Enabled' 1"
 exec_always ~/.fehbg &
-exec_always set_monitors &
+exec_always ~/bin/scripts/set_monitors &
 exec_always ~/.config/polybar/launch.sh &
 exec_always --no-startup-id flashfocus &
 exec --no-startup-id compton --config ~/.config/compton/compton.conf &
@@ -237,4 +236,4 @@ exec --no-startup-id nm-applet &
 exec --no-startup-id pa-applet &
 exec --no-startup-id xfce4-power-manager &
 exec --no-startup-id dunst -conf ~/.config/dunst/dunstrc &
-exec --no-startup-id mpd &
+#exec --no-startup-id mpd &
