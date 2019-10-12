@@ -5,13 +5,12 @@
 export ZSH=$HOME/.oh-my-zsh
 path+=('/home/void/bin/scripts')
 path+=('/home/void/node_modules/.bin')
-export PATH
+path+=('/home/void/.yarn/bin')
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 #ZSH_THEME="michelebologna"
 ZSH_THEME="spaceship"
-
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -58,7 +57,6 @@ plugins=(git)
 plugins+=(k)
 plugins+=(zsh-syntax-highlighting)
 plugins+=(colored-man-pages)
-plugins+=(vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 export SPACESHIP_CHAR_SYMBOL=' '
@@ -66,11 +64,10 @@ export SPACESHIP_NODE_DEFAULT_VERSION=$(node -v)
 export SPACESHIP_EXEC_TIME_SHOW=false
 export SPACESHIP_PACKAGE_SHOW=false
 export SPACESHIP_DIR_PREFIX=""
-export SPACESHIP_VI_MODE_COLOR=grey
-export SPACESHIP_VI_MODE_INSERT=""
+#export SPACESHIP_VI_MODE_COLOR=grey
+#export SPACESHIP_VI_MODE_INSERT=""
 export SPACESHIP_PROMPT_ORDER=(
   #time          # Time stamps section
-	vi_mode
   user          # Username section
   dir           # Current directory section
   host          # Hostname section
@@ -80,13 +77,13 @@ export SPACESHIP_PROMPT_ORDER=(
   jobs          # Background jobs indicator
   exit_code     # Exit code section
   char          # Prompt character
-	)
+)
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# export LANG=en_US.UTF-7
 export VISUAL='nvim'
 export EDITOR="$VISUAL"
 export KEYTIMEOUT=1
@@ -137,13 +134,13 @@ alias xclip="xclip -selection clipboard"
 alias wiki="$EDITOR ~/vimwiki/index.wiki"
 alias todo="$EDITOR ~/vimwiki/Todo.wiki"
 alias workout="$EDITOR ~/vimwiki/Workout.wiki"
-alias tmux="TERM=screen-256color tmux -f ~/.config/tmux/.tmux.conf"
 alias tmuxmain="TERM=screen-256color tmux new -s main"
 alias feh="feh --image-bg black -Z -."
 alias andromeda="cd /run/media/void/ANDROMEDA"
 alias calypso="cd /run/media/void/CALYPSO"
 alias ta="tmux a -t main"
 export FZF_DEFAULT_OPTS="--color=hl:221,hl+:220"
+alias t="TERM=screen-256color tmux"
 #export MESA_GLSL_CACHE_DISABLE=true
 
 
@@ -153,8 +150,49 @@ cdf() { cd "$(awk '{print $1}'  ~/.config/bmdirs | fzf | sed "s|~|$HOME|")" ; }
 se() { $EDITOR "$( du -a ~/.config ~/bin/scripts --exclude="Code*" --exclude={yarn,chromium,skypeforlinux,GIMP,discord,Electron,filezilla,deluge} | awk '{print $2}' | sed "s|/home/void/\.config|>|g" | fzf | sed "s|>|/home/void/.config|")" ; }
 rcd () { ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR" ; }
 
-bindkey -s '^o' 'rcd\n'
-bindkey -v
+# Tmux Function
+tmux() {
+  emulate -L zsh
+
+  # Make sure even pre-existing tmux sessions use the latest SSH_AUTH_SOCK.
+  # (Inspired by: https://gist.github.com/lann/6771001)
+  local SOCK_SYMLINK=~/.ssh/ssh_auth_sock
+  if [ -r "$SSH_AUTH_SOCK" -a ! -L "$SSH_AUTH_SOCK" ]; then
+    ln -sf "$SSH_AUTH_SOCK" $SOCK_SYMLINK
+  fi
+
+  # If provided with args, pass them through.
+  if [[ -n "$@" ]]; then
+    env SSH_AUTH_SOCK=$SOCK_SYMLINK tmux "$@"
+    return
+  fi
+
+  # Check for .tmux file (poor man's Tmuxinator).
+  if [ -x .tmux ]; then
+    # Prompt the first time we see a given .tmux file before running it.
+    local DIGEST="$(openssl sha512 .tmux)"
+    if ! grep -q "$DIGEST" ~/..tmux.digests 2> /dev/null; then
+      cat .tmux
+      read -k 1 -r \
+        'REPLY?Trust (and run) this .tmux file? (t = trust, otherwise = skip) '
+      echo
+      if [[ $REPLY =~ ^[Tt]$ ]]; then
+        echo "$DIGEST" >> ~/..tmux.digests
+        ./.tmux
+        return
+      fi
+    else
+      ./.tmux
+      return
+    fi
+  fi
+
+  # Attach to existing session, or create one, based on current directory.
+  SESSION_NAME=$(basename "$(pwd)")
+  env SSH_AUTH_SOCK=$SOCK_SYMLINK tmux new -A -s "$SESSION_NAME"
+}
+
+bindkey -s '^o' "rcd\r"
 
 # Edit line in vim with ctrl-e
 autoload edit-command-line; zle -N edit-command-line
