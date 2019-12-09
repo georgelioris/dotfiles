@@ -4,8 +4,8 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 path+=('/home/void/bin/scripts')
-path+=('/home/void/node_modules/.bin')
-path+=('/home/void/.yarn/bin')
+path+=('/usr/lib/node_modules')
+#path+=('/home/void/.yarn/bin')
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -134,24 +134,25 @@ alias xclip="xclip -selection clipboard"
 alias wiki="$EDITOR ~/vimwiki/index.wiki"
 alias todo="$EDITOR ~/vimwiki/Todo.wiki"
 alias workout="$EDITOR ~/vimwiki/Workout.wiki"
-alias tmuxmain="TERM=screen-256color tmux new -s main"
+alias tmuxmain="TERM=screen-255color tmux new -s main"
 alias feh="feh --image-bg black -Z -."
 alias andromeda="cd /run/media/void/ANDROMEDA"
 alias calypso="cd /run/media/void/CALYPSO"
 alias ta="tmux a -t main"
+alias t="tmuxf"
+alias tinit="cp ~/code/js/boilerplate-configs/.tmux ."
 export FZF_DEFAULT_OPTS="--color=hl:221,hl+:220"
-alias t="TERM=screen-256color tmux"
 #export MESA_GLSL_CACHE_DISABLE=true
 
 
-cf() { cd "$(du ~/code --exclude="node_*" --exclude=".*" --exclude={misc,public} | awk '{print $2}' | sed "s|/home/void/||" | fzf | sed "s|^|$HOME/|" )" ; }
+cf() { cd "$(du ~/code --exclude={".*","node_*",misc,public} | awk '{print $2}' | sed "s|/home/void/||" | fzf | sed "s|^|$HOME/|" )" ; }
 copy() { cp -v "$1" "$(awk '{print $1}'  ~/.config/bmdirs | fzf | sed "s|~|$HOME|")" ; }
-cdf() { cd "$(awk '{print $1}'  ~/.config/bmdirs | fzf | sed "s|~|$HOME|")" ; }
-se() { $EDITOR "$( du -a ~/.config ~/bin/scripts --exclude="Code*" --exclude={yarn,chromium,skypeforlinux,GIMP,discord,Electron,filezilla,deluge} | awk '{print $2}' | sed "s|/home/void/\.config|>|g" | fzf | sed "s|>|/home/void/.config|")" ; }
+cdf() { cd "$(du --exclude={"node_*","*/.*","Downloads"} | awk '{ $1 = ""; print $0; }' | sed "s|\s*./||" | fzf  )" ; }
+se() { $EDITOR "$( du -a ~/.config ~/bin/scripts --exclude={coc/extensions,DevDocs,tmux/plugins,"Code*",yarn,chromium,skypeforlinux,GIMP,discord,Electron,filezilla,deluge} | awk '{print $2}' | sed "s|/home/void/\.config|>|g" | fzf | sed "s|>|/home/void/.config|")" ; }
 rcd () { ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR" ; }
 
 # Tmux Function
-tmux() {
+tmuxf() {
   emulate -L zsh
 
   # Make sure even pre-existing tmux sessions use the latest SSH_AUTH_SOCK.

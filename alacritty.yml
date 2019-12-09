@@ -64,7 +64,7 @@ scrolling:
   # to allow mouse scrolling for applications like `man`.
   #
   # Specifying `0` will disable faux scrolling.
-  faux_multiplier: 3
+  scrolling-multiplier: 5
 
   # Scroll to the bottom when new text is written to the terminal.
   auto_scroll: false
@@ -115,8 +115,8 @@ font:
     # The `style` can be specified to pick a specific face.
     #style: Italic
 
-  # Point size
-  size: 7
+  # Point size 10.5
+  size: 10
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -145,7 +145,7 @@ font:
   #
   # This is a global setting and will require a log out or restart to take
   # effect.
-  use_thin_strokes: true
+  use_thin_strokes: false
 
 debug:
 

@@ -218,6 +218,9 @@ bindsym Mod1+Shift+w exec chromium --incognito
 # lockscreen
 bindsym Mod1+F9 exec betterlockscreen -l dimblur
 bindsym Mod1+r exec thunar
+bindsym Mod1+t exec ~/bin/scripts/tmuxlist.sh
+bindsym Mod1+Shift+t exec ~/bin/scripts/tmuxkill.sh
+bindsym Mod1+y exec ~/bin/scripts/mpv.sh
 
 ###################################################
 #                autostart                        #
@@ -230,8 +233,8 @@ exec_always "xinput --set-prop 'SYNA2B2C:01 06CB:7F27 Touchpad' 'libinput Tappin
 exec_always ~/.fehbg &
 exec_always ~/bin/scripts/set_monitors &
 exec_always ~/.config/polybar/launch.sh &
+exec --no-startup-id picom --config ~/.config/picom/picom.conf &
 exec_always --no-startup-id flashfocus &
-exec --no-startup-id compton --config ~/.config/compton/compton.conf &
 exec --no-startup-id nm-applet &
 exec --no-startup-id pa-applet &
 exec --no-startup-id xfce4-power-manager &

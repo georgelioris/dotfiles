@@ -15,18 +15,21 @@ set fcs=eob:\  " Hide EndOfBuffer fillchar
 set mouse=a
 set ignorecase
 set smartcase
+set hidden
+set undofile
+set undodir=~/.config/nvim/undodir
 
 " Vim Plug
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'chriskempson/base16-vim'
 Plug 'tmux-plugins/vim-tmux-focus-events'
-Plug 'easymotion/vim-easymotion'
 Plug 'othree/yajs.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'jiangmiao/auto-pairs'
@@ -40,6 +43,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale'
+Plug 'jparise/vim-graphql'
 "Plug 'pangloss/vim-javascript'
 "Plug 'xabikos/vscode-react'
 " Initialize plugin system
@@ -52,19 +56,28 @@ inoremap <C-v> <ESC>"+pa
 vnoremap <C-c> "+y
 vnoremap <C-d> "+d
 nnoremap M :!node '%:p'<CR>
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> <Leader>k :call <SID>show_documentation()<CR>
 map <C-n> :NERDTreeToggle %<CR>
-nnoremap <tab> za
-nnoremap <silent> <leader>t :nohlsearch<CR>
+nnoremap <leader><tab> za
+nnoremap <silent> <leader>h :nohlsearch<CR>
+nnoremap <leader>t :GitGutterToggle<CR>
 nnoremap <leader>a :ALEToggle<CR>
 nnoremap <leader>r :registers<CR>
 nnoremap <leader>q :quit<CR>
 nnoremap <leader>w :write<CR>
 nnoremap <leader>x :xit<CR>
-noremap <leader>p :echo expand('%')<CR>
-noremap <leader>pp :let @+=expand('%') <Bar> :echo expand('%')<CR>
+noremap <leader>g :echo expand('%')<CR>
+noremap <leader>gg :let @+=expand('%') <Bar> :echo expand('%')<CR>
 nnoremap <leader>z :ALEToggleFixer<CR>
 nnoremap <leader><leader> <C-^>
+"nnoremap <leader>p :CtrlPTag<CR>
+nnoremap <silent> <leader>p :call QucikFixToggle()<CR>
+nnoremap <silent> <leader>e :call LoclistToggle()<CR>
+nmap gt <C-]>
+nnoremap J :m .+1<CR>==
+nnoremap K :m .-2<CR>==
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 
 " Coc.nvim
 nmap <silent> gd <Plug>(coc-definition)
@@ -78,23 +91,13 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Easy Motion
-nmap s <Plug>(easymotion-overwin-f)
-nmap s <Plug>(easymotion-overwin-f2)
-
-" JK motions: Line motions
-map <Leader>l <Plug>(easymotion-lineforward)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Leader>h <Plug>(easymotion-linebackward)
-
 " MinimalNERDTree
 let g:NERDTreeMinimalUI = 1
 " Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
 
 " Wiki setup
-map <leader>f :Goyo \| set wrap \| set linebreak<CR>
+"map <leader>f :Goyo \| set wrap \| set linebreak<CR>
 let g:goyo_width = 85
 
 " Sell checking
@@ -107,18 +110,17 @@ set autoread
 set splitbelow splitright
 
 " Themes
-if exists('+termguicolors')
-  let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
+"if exists('+termguicolors')
+"  let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+"  let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+"  set termguicolors
+"endif
 
 let g:airline_theme='zenburn'
 set background=dark
 let g:airline_powerline_fonts = 1
 let ayucolor="dark"
 colorscheme base16-oceanicnext
-" let g:airline_theme='ayu_dark'
 
 " Vim Ctrlp
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -135,24 +137,38 @@ let g:ctrlp_custom_ignore = {
 " Js Ale
 let g:ale_linters = {
 \   'javascript': ['eslint'],
+\   'graphql': ['eslint', 'gqlint'],
+\   'css': ['stylelint'],
+\   'jsx': ['stylelint', 'eslint'],
 \}
+
+let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['prettier'],
-\   'json': ['prettier']
+\   'graphql': ['prettier'],
+\   'jsx': ['prettier'],
+\   'json': ['prettier'],
+\    'css': ['prettier', 'stylelint']
 \}
 command! ALEToggleFixer execute "let g:ale_fix_on_save = get(g:, 'ale_fix_on_save', 0) ? 0 : 1"
+let g:ale_linters_explicit = 1
+let g:ale_javascript_eslint_use_global = 1
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '%s - [%linter%]'
 let g:ale_fix_on_save = 1
 let g:airline#extensions#ale#enabled = 1
-let g:ale_list_window_size = 5
+let g:ale_list_window_size = 3
 let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
 let g:ale_sign_column_always = 1
-let g:ale_sign_error = '>>'
+let g:ale_sign_error = ''
 let g:ale_sign_warning = '--'
-highlight ALEErrorSign guibg=#22282E guifg=#E1333D
-highlight clear ALEWarningSign
+highlight ALEErrorSign guibg=#0a0c0e guifg=#E1333D
+"highlight ALEErrorSign guibg=#22282E guifg=#E1333D
+highlight ALEWarningSign guibg=#0a0c0e guifg=#FFB454
 
 " Use Tab for snippets
 inoremap <silent><expr> <TAB>
@@ -178,17 +194,50 @@ function! s:show_documentation()
 endfunction
 
 " Preview Image with ueberzug
-au BufRead *.png,*.jpg,*.jpeg :call DisplayImage()
-
-function! DisplayImage()
-execute '!ueimg %'
-:bp | :bw #
-endfunction
+"au BufRead *.png,*.jpg,*.jpeg :call DisplayImage()
+"
+"function! DisplayImage()
+"execute '!ueimg %'
+":bp | :bw #
+"endfunction
 
 " Colorscheme customizations
-highlight Normal guibg=#0A0C0E
+let g:gitgutter_enabled = 0
+let g:gitgutter_override_sign_column_highlight = 0
+highlight GitGutterAdd    guibg=#0a0c0e
+highlight GitGutterChange guibg=#0a0c0e
+highlight GitGutterDelete guibg=#0a0c0e
+highlight GitGutterChangeDelete guibg=#0a0c0e
+highlight SignColumn guibg=#0a0c0e
+highlight Normal guibg=#0a0c0e
+highlight LineNr guibg=#0a0c0e guifg=#686868
+autocmd FocusLost,WinLeave * set nocursorline
+autocmd FocusGained,BufEnter,VimEnter,WinEnter * :highlight Normal guibg=#0a0c0e
+autocmd FocusGained,BufEnter,VimEnter,WinEnter * setlocal cursorline
+autocmd FocusGained,BufEnter,VimEnter,WinEnter * :GitGutterDisable
 "hi NormalNC  guibg=#22282E
 "autocmd FocusLost,WinLeave * :hi Normal guibg=#0a0c0e
-autocmd FocusLost,WinLeave * set nocursorline
-autocmd FocusGained,BufEnter,VimEnter,WinEnter * :hi Normal guibg=#0a0c0e
-autocmd FocusGained,BufEnter,VimEnter,WinEnter * setlocal cursorline
+
+
+"Toggle LocationList
+let g:loclist_is_open = 0
+function! LoclistToggle()
+if g:loclist_is_open == 1
+    lclose
+    let g:loclist_is_open = 0
+else
+		lopen
+    let g:loclist_is_open = 1
+endif
+endfunction
+"Toggle QuickFixList
+let g:qflist_is_open = 0
+function! QucikFixToggle()
+	if g:qflist_is_open == 1
+		cclose
+		let g:qflist_is_open = 0
+	else
+		copen
+		let g:qflist_is_open = 1
+	endif
+endfunction
