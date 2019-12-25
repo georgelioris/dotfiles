@@ -9,6 +9,7 @@ set ruler
 set showcmd
 set tabstop=2
 set shiftwidth=0
+set expandtab
 set foldmethod=indent
 set foldlevelstart=99
 set fcs=eob:\  " Hide EndOfBuffer fillchar
@@ -41,13 +42,14 @@ Plug 'Shutnik/jshint2.vim'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/goyo.vim'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki', {'for': 'wiki'}
 Plug 'w0rp/ale'
 Plug 'jparise/vim-graphql'
 "Plug 'pangloss/vim-javascript'
 "Plug 'xabikos/vscode-react'
 " Initialize plugin system
 call plug#end()
+
 
 " Custom Mappings
 nmap Q <Nop>
@@ -97,8 +99,10 @@ let g:NERDTreeMinimalUI = 1
 let g:EasyMotion_smartcase = 1
 
 " Wiki setup
-"map <leader>f :Goyo \| set wrap \| set linebreak<CR>
+map <leader>f :Goyo \| set wrap \| set linebreak<CR>
 let g:goyo_width = 85
+au BufRead,BufNewFile *.wiki set filetype=wiki
+
 
 " Sell checking
 map <leader>o :setlocal spell! spelllang=en_us<CR>
@@ -214,10 +218,29 @@ highlight LineNr guibg=#0a0c0e guifg=#686868
 autocmd FocusLost,WinLeave * set nocursorline
 autocmd FocusGained,BufEnter,VimEnter,WinEnter * :highlight Normal guibg=#0a0c0e
 autocmd FocusGained,BufEnter,VimEnter,WinEnter * setlocal cursorline
-autocmd FocusGained,BufEnter,VimEnter,WinEnter * :GitGutterDisable
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+"autocmd FocusGained,BufEnter,VimEnter,WinEnter * :GitGutterDisable
 "hi NormalNC  guibg=#22282E
 "autocmd FocusLost,WinLeave * :hi Normal guibg=#0a0c0e
+function! s:goyo_enter()
+  execute("highlight Normal guibg=#0a0c0e")
+  execute("setlocal cursorline")
+endfunction
 
+function! s:goyo_leave()
+  execute("set nocursorline")
+  execute("highlight GitGutterAdd    guibg=#0a0c0e")
+  execute("highlight GitGutterChange guibg=#0a0c0e")
+  execute("highlight GitGutterDelete guibg=#0a0c0e")
+  execute("highlight GitGutterChangeDelete guibg=#0a0c0e")
+  execute("highlight SignColumn guibg=#0a0c0e")
+  execute("highlight Normal guibg=#0a0c0e")
+  execute("highlight LineNr guibg=#0a0c0e guifg=#686868")
+  execute("highlight ALEErrorSign guibg=#0a0c0e guifg=#E1333D")
+  execute("highlight ALEWarningSign guibg=#0a0c0e guifg=#FFB454")
+  execute("AirlineTheme zenburn")
+endfunction
 
 "Toggle LocationList
 let g:loclist_is_open = 0
@@ -226,18 +249,18 @@ if g:loclist_is_open == 1
     lclose
     let g:loclist_is_open = 0
 else
-		lopen
+  lopen
     let g:loclist_is_open = 1
 endif
 endfunction
 "Toggle QuickFixList
 let g:qflist_is_open = 0
 function! QucikFixToggle()
-	if g:qflist_is_open == 1
-		cclose
-		let g:qflist_is_open = 0
-	else
-		copen
-		let g:qflist_is_open = 1
-	endif
+  if g:qflist_is_open == 1
+    cclose
+    let g:qflist_is_open = 0
+  else
+    copen
+    let g:qflist_is_open = 1
+  endif
 endfunction
