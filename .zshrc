@@ -5,6 +5,7 @@
 export ZSH=$HOME/.oh-my-zsh
 path+=('/home/void/bin/scripts')
 path+=('/usr/lib/node_modules')
+path+="$(yarn global dir)"
 #path+=('/home/void/.yarn/bin')
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -140,8 +141,15 @@ alias andromeda="cd /run/media/void/ANDROMEDA"
 alias calypso="cd /run/media/void/CALYPSO"
 alias ta="tmux a -t main"
 alias t="tmuxf"
+alias tmux="TERM=screen-256color tmux"
 alias tinit="cp ~/code/js/boilerplate-configs/.tmux ."
+alias fzf='fzf-tmux'
+export FZF_DEFAULT_COMMAND='fd --type f --follow --exclude={.git,node_modules}'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--color=hl:221,hl+:220"
+export FZF_COMPLETION_TRIGGER='**'
+source /usr/share/fzf/completion.zsh
+source /usr/share/fzf/key-bindings.zsh
 #export MESA_GLSL_CACHE_DISABLE=true
 
 
@@ -156,7 +164,7 @@ tmuxf() {
   emulate -L zsh
 
   # Make sure even pre-existing tmux sessions use the latest SSH_AUTH_SOCK.
-  # (Inspired by: https://gist.github.com/lann/6771001)
+  # (Inspired by: https://gist.github.com/lann/6771001
   local SOCK_SYMLINK=~/.ssh/ssh_auth_sock
   if [ -r "$SSH_AUTH_SOCK" -a ! -L "$SSH_AUTH_SOCK" ]; then
     ln -sf "$SSH_AUTH_SOCK" $SOCK_SYMLINK
@@ -190,7 +198,7 @@ tmuxf() {
 
   # Attach to existing session, or create one, based on current directory.
   SESSION_NAME=$(basename "$(pwd)")
-  env SSH_AUTH_SOCK=$SOCK_SYMLINK tmux new -A -s "$SESSION_NAME"
+  env SSH_AUTH_SOCK=$SOCK_SYMLINK TERM=screen-256color tmux new -A -s "$SESSION_NAME"
 }
 
 bindkey -s '^o' "rcd\r"

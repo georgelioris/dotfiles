@@ -123,6 +123,8 @@ if exists('+termguicolors')
   let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
+
+
 " Inspired by Overreacted.io
 let g:jellybeans_overrides = {
 \    'background': { 'guibg': '0a0c0e' },
@@ -156,9 +158,9 @@ let g:jellybeans_overrides = {
 
 let g:jellybeans_use_term_italics = 1
 let g:jellybeans_use_lowcolor_black = 1
+set background=dark
 color jellybeans
 let g:airline_theme='zenburn'
-set background=dark
 let g:airline_powerline_fonts = 1
 
 " FZF.vim configuration
