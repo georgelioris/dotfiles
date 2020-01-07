@@ -1,0 +1,53 @@
+/**
+ * ROFI Color theme
+ * User: Void
+ * Licence: MIT
+ */
+* {
+    background-color:      Black;
+    border-color:          #0a0c0e;
+    text-color:            #f0a0c0;
+    font:            "Noto Sans 10";
+    padding: 0;
+    margin: 0;
+    vertical-align: 1;
+}
+
+#window {
+    anchor:     north;
+    location:   north;
+    width:      100%;
+    children:   [ horibox ];
+    height:     20px;
+}
+
+#horibox {
+    orientation: horizontal;
+    children:   [ prompt, entry, listview ];
+}
+
+#prompt{
+    background-color: #302028;
+    text-color:       #dad085;
+    padding:        0px 8px 0px 5px;
+}
+
+#listview {
+    layout:     horizontal;
+    spacing:    5px;
+    lines:      100;
+}
+
+#entry {
+    expand:     false;
+    width:      10em;
+}
+
+#element {
+    padding: 0px 8px;
+    text-color:      #dad085;
+}
+#element selected {
+    background-color: #302028;
+    text-color:       #f0a0c0;
+}
