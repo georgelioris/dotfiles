@@ -64,6 +64,7 @@ nnoremap M :!node '%:p'<CR>
 nnoremap <silent> <Leader>k :call <SID>show_documentation()<CR>
 map <C-n> :NERDTreeToggle %<CR>
 nnoremap <leader><tab> za
+nnoremap <leader>f :Buffers<CR>
 nnoremap <silent> <leader>h :nohlsearch<CR>
 nnoremap <leader>t :GitGutterToggle<CR>
 nnoremap <leader>a :ALEToggle<CR>
@@ -103,7 +104,7 @@ let g:NERDTreeMinimalUI = 1
 let g:EasyMotion_smartcase = 1
 
 " Wiki setup
-map <leader>f :Goyo \| set wrap \| set linebreak<CR>
+map <F4> :Goyo \| set wrap \| set linebreak<CR>
 let g:goyo_width = 85
 au BufRead,BufNewFile *.wiki set filetype=wiki
 
@@ -124,36 +125,31 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
-
-" Inspired by Overreacted.io
+" Based on oceanicnext
 let g:jellybeans_overrides = {
 \    'background': { 'guibg': '0a0c0e' },
-\    'SpellCap': {'guibg': 'none', 'ctermbg': 'none'},
+\    'SignColumn': { 'guibg': '0a0c0e' },
 \    'DbgCurrent': {'guibg': '0a0c0e'},
-\    'LineNr': {'guibg': 'none'},
-\    'SignColumn': {'guibg': 'none'},
-\    'Special': {'guifg': 'ffcb8b' },
-\    'Statement': {'guifg': 'ffa7c4' },
-\    'javaScriptVariable': {'guifg':'c792ea'},
-\    'Identifier': {'guifg': 'ffcb8b'},
-\    'Structure': {'guifg': 'c792ea'},
-\    'Function': {'guifg': '82aaff'},
-\    'Label': {'guifg':''},
-\    'Type': {'guifg':'c792ea'},
-\    'PreProc': {'guifg': '82aaff'},
-\    'CocFloating': {'guibg': '1c1c1c'},
-\    'Pmenu': {'guibg': '1c1c1c', 'guifg': '888888'},
-\    'PmenuSBar': {'guibg': '0f0f0f'},
-\    'PmenuThumb': {'guibg': '888888'},
-\    'PmenuSel': {'guifg': 'f0a0c0', 'guibg': '302028'},
-\    'MsgSeparator': {'guibg': '1c1c1c'},
-\    'javascriptArrowFunc': {'guifg': 'c792ea'},
-\    'javascriptBraces': {'guifg': 'c792ea'},
-\    'javascriptBrackets': {'guifg': 'c792ea'},
-\    'javascriptParens': {'guifg': 'c792ea'},
-\    'String': {'guifg': 'addb67'},
-\    'javascriptOpSymbol': {'guifg': 'c792ea'},
-\    'Constant': {'guifg': 'ffa7c4'}
+\    'Statement': {'guifg': 'C594C5'},
+\    'Function': {'guifg': '6699CC'},
+\    'Constant': {'guifg': 'F99157'},
+\    'PreProc': {'guifg': '6699CC '},
+\    'Special': {'guifg': '95E6CB'},
+\    'String': {'gufg': '99C794 '},
+\    'Smb': {'guifg': 'B3B1AD'},
+\    'Identifier': {'guifg': 'EC5f67'},
+\    'Label': {'guifg': 'FAC863 '},
+\    'SpellBad': {'guibg': 'E1333D', 'guifg': 'ffffff'},
+\    'SpellCap': {'guibg': ''},
+\    'DiffAdd': {'guibg': '91B362', 'guifg': '000000'},
+\    'DiffDelete': {'guibg': 'EA6C73', 'guifg': '000000'},
+\    'DiffChange': {'guibg': '53BDFA', 'guifg': '000000'},
+\    'diffText': {'guifg': '95E6CB', 'guibg': '000000'},
+\    'GitGutterAdd': {'guifg': '91B362', 'guibg': ''},
+\    'GitGutterChange': {'guifg': '95E6CB', 'guibg': ''},
+\    'GitGutterDelete': {'guifg': 'EA6C73', 'guibg': ''},
+\    'Folded': { 'guibg': ''},
+\    'Comment': { 'guifg': '685958'},
 \}
 
 let g:jellybeans_use_term_italics = 1
@@ -303,36 +299,27 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Preview Image with ueberzug
-"au BufRead *.png,*.jpg,*.jpeg :call DisplayImage()
-"
-"function! DisplayImage()
-"execute '!ueimg %'
-":bp | :bw #
-"endfunction
-
 " Colorscheme customizations
 let g:gitgutter_enabled = 0
 let g:gitgutter_override_sign_column_highlight = 0
-" Vim GitGutter
-highlight GitGutterAdd    guibg=none
-highlight GitGutterChange guibg=none
-highlight GitGutterDelete guibg=none
-highlight GitGutterChangeDelete guibg=none
-"highlight SignColumn guibg=none
-" Overide line numbers
-"highlight LineNr guibg=none guifg=#686868
-" Overide Background
-"highlight Normal guibg=none
-"autocmd FocusGained,BufEnter,VimEnter,WinEnter * :highlight Normal guibg=#0a0c0e
 autocmd FocusGained,BufEnter,VimEnter,WinEnter * setlocal cursorline
 autocmd FocusLost,WinLeave * set nocursorline
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-" autocmd FocusGained,BufEnter,VimEnter,WinEnter * :GitGutterDisable
-" hi NormalNC  guibg=#22282E
-" autocmd FocusLost,WinLeave * :hi Normal guibg=#0a0c0e
+autocmd BufEnter,VimEnter,WinEnter,FocusGained * call <SID>hl_groups()
+
+function! s:hl_groups()
+  execute("hi! link javaScriptVariable Identifier")
+  execute("hi! link javascriptArrowFunc javaScriptVariable")
+  execute("hi! link javascriptBraces  Smb")
+  execute("hi! link javascriptParens  Smb")
+  execute("hi! link javascriptBrackets Smb")
+  execute("hi! link javascriptOpSymbol javaScriptVariable")
+  execute("hi! link javascriptOpSymbols javaScriptVariable")
+  execute("hi! link Type javaScriptVariable")
+  execute("hi! link Structure javaScriptVariable")
+endfunction
 function! s:goyo_enter()
   execute("highlight Normal guibg=#0a0c0e")
   execute("setlocal cursorline")
