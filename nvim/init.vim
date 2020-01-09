@@ -128,6 +128,8 @@ endif
 " Based on oceanicnext
 let g:jellybeans_overrides = {
 \    'background': { 'guibg': '0a0c0e' },
+\    'Normal': { 'guifg': 'd1d1d1' },
+\    'Error': { 'guifg': 'd1d1d1' },
 \    'SignColumn': { 'guibg': '0a0c0e' },
 \    'DbgCurrent': {'guibg': '0a0c0e'},
 \    'Statement': {'guifg': 'C594C5'},
@@ -141,15 +143,22 @@ let g:jellybeans_overrides = {
 \    'Label': {'guifg': 'FAC863 '},
 \    'SpellBad': {'guibg': 'E1333D', 'guifg': 'ffffff'},
 \    'SpellCap': {'guibg': ''},
-\    'DiffAdd': {'guibg': '91B362', 'guifg': '000000'},
-\    'DiffDelete': {'guibg': 'EA6C73', 'guifg': '000000'},
-\    'DiffChange': {'guibg': '53BDFA', 'guifg': '000000'},
-\    'diffText': {'guifg': '95E6CB', 'guibg': '000000'},
+\    'DiffAdd': {'guibg': '1c1c1c', 'guifg': '99C794 '},
+\    'DiffDelete': {'guibg': '1c1c1c', 'guifg': 'EC5f67'},
+\    'DiffChange': {'guibg': '1c1c1c', 'guifg': 'd1d1d1'},
+\    'diffText': {'guifg': '1c1c1c', 'guibg': '95E6CB'},
 \    'GitGutterAdd': {'guifg': '91B362', 'guibg': ''},
 \    'GitGutterChange': {'guifg': '95E6CB', 'guibg': ''},
 \    'GitGutterDelete': {'guifg': 'EA6C73', 'guibg': ''},
-\    'Folded': { 'guibg': ''},
+\    'Folded': { 'guibg': '1c1c1c', 'guifg': '685958'},
 \    'Comment': { 'guifg': '685958'},
+\    'CocFloating': {'guibg': '1c1c1c'},
+\    'Pmenu': {'guibg': '1c1c1c', 'guifg': '888888'},
+\    'PmenuSBar': {'guibg': '0f0f0f'},
+\    'PmenuThumb': {'guibg': '888888'},
+\    'PmenuSel': {'guifg': 'f0a0c0', 'guibg': '302028'},
+\    'MsgSeparator': {'guibg': '1c1c1c'},
+\    'Cursor': {'guifg': 'd1d1d1'},
 \}
 
 let g:jellybeans_use_term_italics = 1
@@ -357,3 +366,23 @@ function! QucikFixToggle()
     let g:qflist_is_open = 1
   endif
 endfunction
+
+" Terminal Colors
+let g:terminal_color_0 =  "#1d2021""
+let g:terminal_color_1 =  "#C594C5"
+let g:terminal_color_2 =  "#91B362"
+let g:terminal_color_3 =  "#F9AF4F"
+let g:terminal_color_4 =  "#53BDFA"
+let g:terminal_color_5 =  "#FAE994"
+let g:terminal_color_6 =  "#8ec07c"
+let g:terminal_color_7 =  "#90E1C6"
+let g:terminal_color_8 =  "#d1d1d1"
+let g:terminal_color_9 =  "#C594C5"
+let g:terminal_color_10 = "#F07178"
+let g:terminal_color_11 = "#C2D94C"
+let g:terminal_color_12 = "#FFB454"
+let g:terminal_color_13 = "#FFEE99"
+let g:terminal_color_14 = "#95E6CB"
+let g:terminal_color_15 = "#c7c7c7"
+let g:terminal_color_background = g:terminal_color_0
+let g:terminal_color_foreground = g:terminal_color_8
