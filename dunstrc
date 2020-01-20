@@ -318,8 +318,23 @@
 
 [brightness]
      appname = "xfce4-power-manager"
-     summary = "Power Manager"
+     icon = "display-brightness-symbolic"
      format = "<b></b> Brightness<b> %p</b>"
+
+[powermanager]
+     appname = "xfce4-power-manager"
+     icon    = battery*
+     format = "%b"
+
+[full]
+     appname = "xfce4-power-manager"
+     icon = battery-full-*
+     format = "<b></b> Fully Charged"
+
+[charging]
+     appname = "xfce4-power-manager"
+     icon = *charging
+     format = "<b></b> Charging <b>%p</b>"
 
 [pa-applet]
     appname = "pa-applet"
