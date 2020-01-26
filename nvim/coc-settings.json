@@ -1,14 +1,16 @@
 {
-	"snippets.ultisnips.directories": [
-  "UltiSnips",
-  "gosnippets/UltiSnips"
-],
+  "npm.binPath": "~/.yarn/bin",
+  "snippets.ultisnips.directories": ["UltiSnips", "gosnippets/UltiSnips"],
   "snippets.extends": {
     "javascriptreact": ["javascript"],
     "typescriptreact": ["javascript"],
-    "typescript": ["javascript"]
-		},
-		"suggest.noselect": false,
-		"suggest.maxCompleteItemCount": 10,
-    "javascript.validate.enable": false
+    "typescript": ["javascript"],
+    "typescript.jsx": ["javascript"]
+  },
+  "suggest.noselect": false,
+  "suggest.maxCompleteItemCount": 10,
+  "javascript.suggestionActions.enabled": false,
+  "javascript.validate.enable": false,
+  "suggest.floatEnable": false,
+  "diagnostic.enable": false
 }
