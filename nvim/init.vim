@@ -20,11 +20,12 @@ set undofile
 set undodir=~/.config/nvim/undodir
 set updatetime=200
 set encoding=utf-8
+set signcolumn=yes
 
 " Vim Plug
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'scrooloose/nerdtree'
-Plug 'chriskempson/base16-vim'
+"Plug 'chriskempson/base16-vim'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'othree/yajs.vim'
 Plug 'vim-airline/vim-airline'
@@ -34,18 +35,19 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'tsony-tsonev/nerdtree-git-plugin'
 Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'mxw/vim-jsx'
+Plug 'mxw/vim-jsx', {'for': ['js', 'jsx']}
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim', {'on': 'Goyo'}
 Plug 'junegunn/fzf.vim'
 Plug 'vimwiki/vimwiki', {'for': 'wiki'}
-Plug 'w0rp/ale'
-Plug 'jparise/vim-graphql'
-Plug 'romainl/Apprentice'
+Plug 'w0rp/ale' ", {'for': ['javascript', 'javascript.jsx', 'json', 'reason']}
+"Plug 'jparise/vim-graphql', {'for': 'gql'}
 Plug 'nanotech/jellybeans.vim'
+Plug 'reasonml-editor/vim-reason-plus', {'for': 'reason'}
 "Plug 'xabikos/vscode-react'
 " Initialize plugin system
 call plug#end()
@@ -107,11 +109,13 @@ nnoremap <C-H> <C-W><C-H>
 let g:NERDTreeMinimalUI = 1
 " Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
+let g:NERDTreeIgnore = ['^node_modules$']
 
 " Wiki setup
 map <F4> :Goyo \| set wrap \| set linebreak<CR>
 let g:goyo_width = 85
 au BufRead,BufNewFile *.wiki set filetype=wiki
+au BufRead,BufNewFile *.wiki setlocal textwidth=85
 
 
 " Sell checking
@@ -129,6 +133,8 @@ if exists('+termguicolors')
   let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
+
+set pyx=3
 
 " Colorscheme customizations
 let g:gitgutter_enabled = 0
