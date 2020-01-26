@@ -4,8 +4,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 path+=('/home/void/bin/scripts')
-path+=('/usr/lib/node_modules')
-path+="$(yarn global dir)"
+path+=('/home/void/.yarn/bin')
 #path+=('/home/void/.yarn/bin')
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -23,7 +22,7 @@ ZSH_THEME="spaceship"
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -135,7 +134,6 @@ alias xclip="xclip -selection clipboard"
 alias wiki="$EDITOR ~/vimwiki/index.wiki"
 alias todo="$EDITOR ~/vimwiki/Todo.wiki"
 alias workout="$EDITOR ~/vimwiki/Workout.wiki"
-alias tmuxmain="TERM=screen-255color tmux new -s main"
 alias feh="feh --image-bg black -Z -."
 alias andromeda="cd /run/media/void/ANDROMEDA"
 alias calypso="cd /run/media/void/CALYPSO"
@@ -143,21 +141,31 @@ alias ta="tmux a -t main"
 alias t="tmuxf"
 alias tmux="TERM=screen-256color tmux"
 alias tinit="cp ~/code/js/boilerplate-configs/.tmux ."
-alias fzf='fzf-tmux'
+export FZF_TMUX=1
 export FZF_DEFAULT_COMMAND='fd --type f --follow --exclude={.git,node_modules}'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--color=hl:221,hl+:220"
 export FZF_COMPLETION_TRIGGER='**'
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+# fzf **<TAB> completion
 source /usr/share/fzf/completion.zsh
+# fzf CTRL-T
 source /usr/share/fzf/key-bindings.zsh
 #export MESA_GLSL_CACHE_DISABLE=true
 
 
-cf() { cd "$(du ~/code --exclude={".*","node_*",misc,public} | awk '{print $2}' | sed "s|/home/void/||" | fzf | sed "s|^|$HOME/|" )" ; }
+cf() { cd "$(du ~/code --exclude={".*","node_*",misc,public} | cut -f2- | sed "s|$HOME/||" | fzf | sed "s|^|$HOME/|" )" ; }
 copy() { cp -v "$1" "$(awk '{print $1}'  ~/.config/bmdirs | fzf | sed "s|~|$HOME|")" ; }
-cdf() { cd "$(du --exclude={"node_*","*/.*","Downloads"} | awk '{ $1 = ""; print $0; }' | sed "s|\s*./||" | fzf  )" ; }
-se() { $EDITOR "$( du -a ~/.config ~/bin/scripts --exclude={coc/extensions,DevDocs,tmux/plugins,"Code*",yarn,chromium,skypeforlinux,GIMP,discord,Electron,filezilla,deluge} | awk '{print $2}' | sed "s|/home/void/\.config|>|g" | fzf | sed "s|>|/home/void/.config|")" ; }
-rcd () { ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR" ; }
+cdf() { cd ."$(du --exclude={"node_*","*/.*","Downloads"} | cut -d'.' -f2- | fzf-tmux  )" ; }
+se() { $EDITOR "$( du -a ~/.config ~/bin/scripts --exclude-from=$HOME/.fzfignore | cut -f2- | sed "s|$HOME/\.config/|>|g" | fzf | sed "s|>|$HOME/.config/|")" ; }
+rcd() { ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR" ; }
+setwall() { du -a ~/Pictures/Wallpapers/ | cut -f2- | fzfimg | xargs -I {} feh --bg-fill "{}" }
+fbr() {
+  local branches branch
+  branches=$(git branch) &&
+  branch=$(echo "$branches" | fzf --reverse --height="10%" +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //")
+}
 
 # Tmux Function
 tmuxf() {
@@ -198,7 +206,7 @@ tmuxf() {
 
   # Attach to existing session, or create one, based on current directory.
   SESSION_NAME=$(basename "$(pwd)")
-  env SSH_AUTH_SOCK=$SOCK_SYMLINK TERM=screen-256color tmux new -A -s "$SESSION_NAME"
+  env SSH_AUTH_SOCK=$SOCK_SYMLINK tmux new -A -s "$SESSION_NAME"
 }
 
 bindkey -s '^o' "rcd\r"

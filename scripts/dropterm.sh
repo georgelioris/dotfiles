@@ -10,5 +10,5 @@ if [ $DROP -gt 0 ]
  then
    exit 1
   else
-    exec alacritty --class "dropdown" --config-file /home/void/.config/alacritty/drop.yml
+   alacritty --class "dropdown" --config-file /home/void/.config/alacritty/drop.yml
 fi

@@ -9,7 +9,7 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #e20A0E14
+background = #e2000000
 ;#bb010101
 background-alt = #aa252525
 ;foreground = ${xrdb:color7:#222}
@@ -22,7 +22,7 @@ alert = #bd2c40
 [bar/bar1]
 monitor = ${env:MONITOR:}
 width = 100%
-height = 27
+height = 20
 ;offset-x = 1%
 ;offset-y = -1%
 ;radius = 6.0
@@ -45,7 +45,8 @@ module-margin-left = 2
 module-margin-right = 2
 
 font-1 = Siji:pixelsize=10
-font-0 = Noto Sans:size=11:antialias=true;
+font-0 = Noto Sans:size=10:antialias=true;
+font-3 = Noto Sans:size=10:antialias=ture:weight=bold;
 ;font-1 = Font Awesome 5 Free Solid:pixelsize=10
 font-2 = Material Icons:pixelsize=10
 dpi = 96
@@ -86,7 +87,7 @@ format-prefix =
 format-prefix-foreground = ${colors.foreground-alt}
 ;format-prefix-underline = ${colors.secondary}
 
-label-layout = %layout%
+label-layout = %{T4}%layout%
 ;label-layout-underline = ${colors.secondary}
 
 label-indicator-padding = 2
@@ -137,7 +138,7 @@ label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
-label-focused = %index%
+label-focused = %{T4}%index%
 label-focused-background = ${colors.background}
 label-focused-underline = #C7C7C7
 label-focused-padding = 3
@@ -254,9 +255,9 @@ type = internal/date
 interval = 5
 
 date =
-date-alt = "%a, %d %B %Y"
+date-alt = %{T4}%d/%m/%y
 
-time = %I:%M %p
+time = %{T4}%a %I:%M %p
 ;time-alt = %H:%M:%S
 
 format-prefix-foreground = ${colors.foreground-alt}

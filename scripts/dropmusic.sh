@@ -10,5 +10,5 @@ if [ $DROP -gt 0 ]
  then
    exit 1
   else
-    exec alacritty --class "ncmpcpp" -e ncmpcpp
+   alacritty --class "ncmpcpp" -e ncmpcpp
 fi
