@@ -10,11 +10,11 @@ let g:jellybeans_overrides = {
 \    'Constant': {'guifg': 'F99157'},
 \    'PreProc': {'guifg': '6699CC '},
 \    'Special': {'guifg': '95E6CB'},
-\    'String': {'gufg': '99C794 '},
+\    'String': {'guifg': '99C794'},
 \    'Smb': {'guifg': 'B3B1AD'},
 \    'Identifier': {'guifg': 'EC5f67'},
 \    'Label': {'guifg': 'FAC863 '},
-\    'SpellBad': {'guibg': 'E1333D', 'guifg': 'ffffff'},
+\    'SpellBad': {'guibg': '', 'guifg': 'EA6C73'},
 \    'SpellCap': {'guibg': ''},
 \    'DiffAdd': {'guibg': '1c1c1c', 'guifg': '99C794 '},
 \    'DiffDelete': {'guibg': '1c1c1c', 'guifg': 'EC5f67'},
@@ -34,6 +34,9 @@ let g:jellybeans_overrides = {
 \    'Cursor': {'guifg': 'd1d1d1'},
 \    'MatchParen': {'guifg': '', 'guibg': '4d3538' },
 \    'CursorLineNr': {'guifg': 'd1d1d1'},
+\    'VertSplit': {'guifg': '1c1c1c', 'guibg': '', 'attr': 'bold'},
+\    'StatusLineNC': {'guibg': '1c1c1c'},
+\    'StatusLine': {'guibg': '605958'}
 \}
 
 let g:jellybeans_use_term_italics = 1
