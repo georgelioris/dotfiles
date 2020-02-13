@@ -23,7 +23,6 @@ ZSH_THEME="spaceship"
 
 # Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=13
-
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
 
@@ -57,6 +56,7 @@ plugins=(git)
 plugins+=(k)
 plugins+=(zsh-syntax-highlighting)
 plugins+=(colored-man-pages)
+plugins+=(zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 export SPACESHIP_CHAR_SYMBOL=' '
@@ -131,13 +131,12 @@ alias c="clear"
 alias pac="sudo pacman"
 alias yank="yank -- xsel -b"
 alias xclip="xclip -selection clipboard"
-alias wiki="$EDITOR ~/vimwiki/index.wiki"
+alias wiki="$EDITOR -c Goyo ~/vimwiki/index.wiki"
 alias todo="$EDITOR ~/vimwiki/Todo.wiki"
 alias workout="$EDITOR ~/vimwiki/Workout.wiki"
 alias feh="feh --image-bg black -Z -."
 alias andromeda="cd /run/media/void/ANDROMEDA"
 alias calypso="cd /run/media/void/CALYPSO"
-alias ta="tmux a -t main"
 alias t="tmuxf"
 alias tmux="TERM=screen-256color tmux"
 alias tinit="cp ~/code/js/boilerplate-configs/.tmux ."
@@ -153,13 +152,14 @@ source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
 #export MESA_GLSL_CACHE_DISABLE=true
 
-
-cf() { cd "$(du ~/code --exclude={".*","node_*",misc,public} | cut -f2- | sed "s|$HOME/||" | fzf | sed "s|^|$HOME/|" )" ; }
-copy() { cp -v "$1" "$(awk '{print $1}'  ~/.config/bmdirs | fzf | sed "s|~|$HOME|")" ; }
-cdf() { cd ."$(du --exclude={"node_*","*/.*","Downloads"} | cut -d'.' -f2- | fzf-tmux  )" ; }
-se() { $EDITOR "$( du -a ~/.config ~/bin/scripts --exclude-from=$HOME/.fzfignore | cut -f2- | sed "s|$HOME/\.config/|>|g" | fzf | sed "s|>|$HOME/.config/|")" ; }
+ta() { tmux a -t "$(tmux ls | sed  "s/:.*//"  | fzf --reverse --height="10%" +m)" || exit ; }
+tk() { tmux ls | sed  "s/:.*//"  | fzf --reverse --height="10%" | xargs -rI {} tmux kill-session -t "{}" ; }
+cf() { cd "$(du ~/code --exclude={".*","node_*",misc,public} | cut -f2- | sed "s|$HOME/||" | fzf +m | sed "s|^|$HOME/|" )" || exit ; }
+copy() { cp -v "$1" "$(awk '{print $1}'  ~/.config/bmdirs | fzf --reverse --height="20%" +m | sed "s|~|$HOME|")" ; }
+cdf() { cd ."$(du --exclude={"node_*","*/.*","Downloads"} | cut -d'.' -f2- | fzf-tmux --reverse --height="50%" +m )" ; }
+se() { $EDITOR "$( du -a ~/.config ~/bin/scripts --exclude-from=$HOME/.fzfignore | cut -f2- | sed "s|$HOME/\.config/|>|g" | fzf +m | sed "s|>|$HOME/.config/|")" ; }
 rcd() { ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR" ; }
-setwall() { du -a ~/Pictures/Wallpapers/ | cut -f2- | fzfimg | xargs -I {} feh --bg-fill "{}" }
+setwall() { fd --type f . ~/Pictures/Wallpapers/ | fzfimg | xargs -I {} feh --bg-fill "{}" }
 fbr() {
   local branches branch
   branches=$(git branch) &&

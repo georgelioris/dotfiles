@@ -142,6 +142,7 @@ for_window [instance=$music] border pixel 1
 # Set Music Player
 set $music "spotify"
 set $musicscript "~/bin/scripts/dropspot.sh"
+set $browser "chromium"
 
 # Ws mappings
 set $space1 "1"
@@ -213,8 +214,8 @@ bindsym Mod1+F8 exec ~/bin/scripts/prtsc.sh
 bindsym Mod1+F10 exec ~/bin/scripts/monitor_layout.sh
 bindsym Mod1+F12 exec ~/bin/scripts/rofi-power.sh
 # browser
-bindsym Mod1+w exec google-chrome-stable
-bindsym Mod1+Shift+w exec google-chrome-stable --incognito
+bindsym Mod1+w exec $browser
+bindsym Mod1+Shift+w exec $browser --incognito
 # lockscreen
 bindsym Mod1+F9 exec betterlockscreen -l dimblur
 bindsym Mod1+r exec thunar
