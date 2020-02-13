@@ -142,7 +142,7 @@ for_window [instance=$music] border pixel 1
 # Set Music Player
 set $music "spotify"
 set $musicscript "~/bin/scripts/dropspot.sh"
-set $browser "chromium"
+set $browser chromium
 
 # Ws mappings
 set $space1 "1"
