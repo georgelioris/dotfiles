@@ -140,6 +140,7 @@ alias calypso="cd /run/media/void/CALYPSO"
 alias t="tmuxf"
 alias tmux="TERM=screen-256color tmux"
 alias tinit="cp ~/code/js/boilerplate-configs/.tmux ."
+alias sshpi="ssh alarm@192.168.1.17"
 export FZF_TMUX=1
 export FZF_DEFAULT_COMMAND='fd --type f --follow --exclude={.git,node_modules}'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

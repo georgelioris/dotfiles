@@ -25,7 +25,7 @@ function! FzfOmni()
   if v:shell_error
     :Files
   else
-    :GFiles --exclude-standard --cached --others
+    :GFiles --cached --others --exclude-standard
   endif
 endfunction
 

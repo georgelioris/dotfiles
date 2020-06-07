@@ -7,6 +7,13 @@
     "typescript": ["javascript"],
     "typescript.jsx": ["javascript"]
   },
+  "javascript.implementationsCodeLens.enable": false,
+  "javascript.referencesCodeLens.enable": false,
+  "typescript.implementationsCodeLens.enable": false,
+  "typescript.referencesCodeLens.enable": false,
+  "svelte.plugin.typescript.enable": false,
+  "svelte.plugin.typescript.diagnostics.enable": false,
+  "diagnostic.displayByAle": true,
   "suggest.noselect": false,
   "suggest.maxCompleteItemCount": 10,
   "javascript.suggestionActions.enabled": false,

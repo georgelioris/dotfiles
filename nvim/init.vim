@@ -23,12 +23,14 @@ set updatetime=200
 set undolevels=1000
 set encoding=utf-8
 set signcolumn=yes
-"set list
-"set listchars=tab:→\ ,trail:·,nbsp:·
+set list
+set listchars=tab:⸥\ ,trail:·,nbsp:·
 
 " Vim Plug
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'scrooloose/nerdtree'
+Plug 'Yggdroot/indentLine'
+Plug 'evanleck/vim-svelte', {'for':  'svelte'}
 "Plug 'chriskempson/base16-vim'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'othree/yajs.vim'
@@ -37,9 +39,9 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'tsony-tsonev/nerdtree-git-plugin'
 Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mxw/vim-jsx', {'for': ['js', 'jsx']}
@@ -60,7 +62,6 @@ source ~/.config/nvim/color.vim
 source ~/.config/nvim/editor.vim
 source ~/.config/nvim/terminal.vim
 source ~/.config/nvim/fzf.vim
-
 
 " Custom Mappings
 map <F1> :Help <CR>
@@ -90,9 +91,9 @@ nnoremap <leader>z :ALEToggleFixer<CR>
 nnoremap <leader><leader> <C-^>
 nnoremap <C-p> :call FzfOmni()<CR>
 nnoremap <Leader>p :RG<CR>
-"nnoremap <silent> <leader>p :call functions#QucikFixToggle()<CR>
+nnoremap <Leader>cc :CocCommand<CR>
+"nnoremap <silent> <leader>p :call functions#QuickFixToggle()<CR>
 nnoremap <silent> <leader>e :call functions#LoclistToggle()<CR>
-nmap gt <C-]>
 nnoremap J :m .+1<CR>==
 nnoremap K :m .-2<CR>==
 vnoremap J :m '>+1<CR>gv=gv
@@ -129,7 +130,7 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown',
                   \ '.mkd': 'markdown',
                   \ '.wiki': 'media'}
 " Sell checking
-map <leader>o :setlocal spell! spelllang=en_us<CR>
+map <silent> <leader>o :setlocal spell! spelllang=en_us<CR>
 imap <c-f> <c-g>u<Esc>[s1z=`]a<c-g>u
 nmap <c-f> [s1z=<c-o>
 set autoread
@@ -156,5 +157,6 @@ autocmd! User GoyoEnter nested call functions#goyo_enter()
 autocmd! User GoyoLeave nested call functions#goyo_leave()
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 autocmd BufEnter,VimEnter,WinEnter,FocusGained * call functions#hl_groups()
+" autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank('Substitute', 200)
 command! -nargs=? Fold :call CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')

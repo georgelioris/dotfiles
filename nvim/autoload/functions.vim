@@ -57,7 +57,7 @@ endfunction
 
 " Toggle QuickFixList
 let g:qflist_is_open = 0
-function! functions#QucikFixToggle()
+function! functions#QuickFixToggle()
   if g:qflist_is_open == 1
     cclose
     let g:qflist_is_open = 0
@@ -67,12 +67,10 @@ function! functions#QucikFixToggle()
   endif
 endfunction
 
-" filter  /^.*\(\wiki\)\@<!$/ oldfiles
-" function! s:filtered_hist()
-"     call filter(v:oldfiles, 'v:val !~ "\\.wiki"')
-"   return fzf#vim#_uniq(map(
-"     \ filter([expand('%')], 'len(v:val)')
-"     \   + filter(map(s:buflisted_sorted(), 'bufname(v:val)'), 'len(v:val)')
-"     \   + filter(v:oldfiles, "filereadable(fnamemodify(v:val, ':p'))"),
-"     \ 'fnamemodify(v:val, ":~:.")'))
-" endfunction
+" Get hl-group under cursor
+function! functions#SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc

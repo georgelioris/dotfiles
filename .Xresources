@@ -43,6 +43,6 @@ Xft.lcdfilter: lcddefault
 *.color7:       #C7C7C7
 *.color15:      #FFFFFF
 
-*.font: Hack:pixelsize=14:antialias=true:autohint=true
+! *.font: Hack:pixelsize=14:antialias=true:autohint=true
 *.alpha: 255
-*.boldFont: Hack:pixelsize=14
+! *.boldFont: Hack:pixelsize=14
