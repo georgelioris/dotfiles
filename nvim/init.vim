@@ -54,7 +54,7 @@ Plug 'w0rp/ale' ", {'for': ['javascript', 'javascript.jsx', 'json', 'reason']}
 "Plug 'jparise/vim-graphql', {'for': 'gql'}
 Plug 'nanotech/jellybeans.vim'
 Plug 'reasonml-editor/vim-reason-plus', {'for': 'reason'}
-"Plug 'xabikos/vscode-react'
+Plug 'xabikos/vscode-react'
 " Initialize plugin system
 call plug#end()
 
@@ -91,7 +91,6 @@ nnoremap <leader>z :ALEToggleFixer<CR>
 nnoremap <leader><leader> <C-^>
 nnoremap <C-p> :call FzfOmni()<CR>
 nnoremap <Leader>p :RG<CR>
-nnoremap <Leader>cc :CocCommand<CR>
 "nnoremap <silent> <leader>p :call functions#QuickFixToggle()<CR>
 nnoremap <silent> <leader>e :call functions#LoclistToggle()<CR>
 nnoremap J :m .+1<CR>==
@@ -104,6 +103,8 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nnoremap <leader>cc :CocCommand<CR>
+nmap <leader>rn <Plug>(coc-rename)
 
 " Move between panes
 nnoremap <C-J> <C-W><C-J>

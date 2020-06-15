@@ -168,8 +168,8 @@ debug:
 colors:
   # Default colors
   primary:
-    #background: '0x0A0C0E'
-    backgroubd: '0x000000'
+    #background: '0x0a0e14'
+    background: '0x080707'
     foreground: '0xB3B1AD'
 
   # Normal colors

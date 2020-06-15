@@ -1,6 +1,5 @@
 {
   "npm.binPath": "~/.yarn/bin",
-  "snippets.ultisnips.directories": ["UltiSnips", "gosnippets/UltiSnips"],
   "snippets.extends": {
     "javascriptreact": ["javascript"],
     "typescriptreact": ["javascript"],
