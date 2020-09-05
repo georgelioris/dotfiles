@@ -1,0 +1,46 @@
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set selection-clipboard clipboard
+set page-padding 1
+set recolor-lightcolor "#000000"
+set recolor-darkcolor "#d1d1d1"
+set font "Source Code Pro 10"
+map u scroll half-up
+map d scroll half-down
+map D toggle_page_mode
+map r reload
+map R rotate
+#stop at page boundries
+set scroll-page-aware "true"
+#set smooth-scroll "true"
+set scroll-full-overlap 0.01
+set adjust-open "width"
+set pages-per-row 1
+set default-bg "#000000"
+set default-fg "#d1d1d1"
+set completion-bg "#000000"
+set inputbar-bg "#000000"
+set inputbar-fg "#FFFFFF"
+set statusbar-bg "#000000"
+set statusbar-fg "#d1d1d1"
+set statusbar-h-padding 10
+set statusbar-v-padding 3
+set statusbar-basename true
+set completion-highlight-bg "#FFB454"
+set highlight-color "#F9AF4F"
+set highlight-active-color "#F07178"
+set notification-error-bg "#F07178"
+set notification-error-fg "#FFFFFF"
+set notification-warning-bg "#F9AF4F"
+set notification-warning-fg "#FFFFFF"
+set notification-bg "#000000"
+set notification-fg "#FFB454"
+#set tabbar-bg "#000000"
+set statusbar-home-tilde true
+set window-title-home-tilde true
+set index-bg "#000000"
+set index-fg "#d1d1d1"
+set index-active-bg "#F9AF4F"
+set index-active-fg "#000000"
+set completion-group-bg "#000000"
+set completion-group-fg "#F9AF4F"

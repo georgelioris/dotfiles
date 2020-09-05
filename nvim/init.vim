@@ -33,7 +33,6 @@ Plug 'Yggdroot/indentLine'
 Plug 'evanleck/vim-svelte', {'for':  'svelte'}
 "Plug 'chriskempson/base16-vim'
 Plug 'tmux-plugins/vim-tmux-focus-events'
-Plug 'othree/yajs.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'honza/vim-snippets'
@@ -44,6 +43,8 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'HerringtonDarkholme/yats.vim', {'for': ['ts', 'tsx']}
+Plug 'othree/yajs.vim', {'for': ['js', 'jsx']}
 Plug 'mxw/vim-jsx', {'for': ['js', 'jsx']}
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
@@ -53,6 +54,8 @@ Plug 'vimwiki/vimwiki', {'for': [ 'wiki', 'markdown' ]}
 Plug 'w0rp/ale' ", {'for': ['javascript', 'javascript.jsx', 'json', 'reason']}
 "Plug 'jparise/vim-graphql', {'for': 'gql'}
 Plug 'nanotech/jellybeans.vim'
+" Plug 'morhetz/gruvbox'
+" Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'reasonml-editor/vim-reason-plus', {'for': 'reason'}
 Plug 'xabikos/vscode-react'
 " Initialize plugin system
@@ -67,19 +70,17 @@ source ~/.config/nvim/fzf.vim
 map <F1> :Help <CR>
 map <F2> :History <CR>
 map <F3> :Files ~/<CR>
+map <F5> :call functions#PickColor(@")<CR>
 nmap Q <Nop>
 noremap Y y$
-nnoremap <leader>d :GitGutterFold<CR>
 inoremap <C-v> <ESC>"+pa
 vnoremap <C-c> "+y
 vnoremap <C-d> "+d
 nnoremap <leader>m :!node '%:p'<CR>
-nnoremap <silent> <Leader>k :call functions#show_documentation()<CR>
 map <C-n> :NERDTreeToggle %<CR>
 nnoremap <leader><tab> za
 nnoremap <leader>f :Buffers<CR>
 nnoremap <silent> <leader>h :nohlsearch<CR>
-nnoremap <leader>t :GitGutterToggle<CR>
 nnoremap <leader>a :ALEToggle<CR>
 nnoremap <leader>r :registers<CR>
 nnoremap <leader>q :quit<CR>
@@ -103,8 +104,21 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nnoremap <silent> <Leader>k :call functions#show_documentation()<CR>
+nmap <leader><F2> <Plug>(coc-rename)
 nnoremap <leader>cc :CocCommand<CR>
-nmap <leader>rn <Plug>(coc-rename)
+
+" GitGutter
+nmap ghs <Plug>(GitGutterStageHunk)
+nmap ghu <Plug>(GitGutterUndoHunk)
+nmap ghp <Plug>(GitGutterPreviewHunk)
+nnoremap <leader>d :GitGutterFold<CR>
+nnoremap <leader>t :call functions#GitGutterNextHunkCycle()<CR>
+
+" Fugitive
+nmap <leader>gs :Git<CR>
+nmap <leader>gf :diffget //2<CR>
+nmap <leader>gj :diffget //3<CR>
 
 " Move between panes
 nnoremap <C-J> <C-W><C-J>
@@ -147,6 +161,7 @@ if exists('+termguicolors')
 endif
 
 set pyx=3
+let g:python_host_prog = '/bin/python2'
 let g:python3_host_prog = '/bin/python3'
 
 " Colorscheme customizations

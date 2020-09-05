@@ -1,0 +1,48 @@
+auto-reload yes
+external-url-viewer "urlscan -dc -r 'linkhandler {}'"
+
+# Binds
+bind-key j down
+bind-key k up
+bind-key j next articlelist
+bind-key k prev articlelist
+bind-key J next-feed articlelist
+bind-key K prev-feed articlelist
+bind-key G end
+bind-key g home
+bind-key d pagedown
+bind-key u pageup
+bind-key l open
+bind-key h quit
+bind-key a toggle-article-read
+bind-key n next-unread
+bind-key N prev-unread
+bind-key D pb-download
+bind-key U show-urls
+bind-key x pb-delete
+save-path "~/Documents/archived-rss"
+
+# Macros
+
+browser linkhandler
+macro , open-in-browser
+#macro a set browser "mpv youtube-dl --add-metadata -xic -f bestaudio/best"; open-in-browser ; set browser linkhandler
+macro y set browser "setsid -f mpv"; open-in-browser ; set browser linkhandler
+macro w set browser "chromium"; open-in-browser ; set browser linkhandler
+
+# Colors
+color background         default  default
+color listnormal         white    default
+color listnormal_unread  blue     default
+color listfocus          white    color236 bold
+color listfocus_unread   blue     color236 bold
+color info               yellow   default
+color article            default  default
+
+# Highlights
+highlight article "^(Title):.*$" magenta default
+highlight article "https?://[^ ]+" red default
+highlight article "\\[image\\ [0-9]+\\]" cyan default
+highlight article "\\[[0-9][0-9]*\\]" yellow default bold
+highlight article ":.*\\(link\\)$" blue default
+highlight article ":.*\\(image\\)$" cyan default

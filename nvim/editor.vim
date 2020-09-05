@@ -28,9 +28,9 @@ let g:ale_reason_ls_executable = '/home/void/.config/coc/extensions/node_modules
 command! ALEToggleFixer execute "let g:ale_fix_on_save = get(g:, 'ale_fix_on_save', 0) ? 0 : 1"
 let g:ale_linters_explicit = 1
 let g:ale_javascript_eslint_use_global = 1
-let g:ale_echo_msg_error_str = 'Error'
-let g:ale_echo_msg_warning_str = 'Warn'
-let g:ale_echo_msg_format = '%s - %code%'
+let g:ale_echo_msg_error_str = '🚫'
+let g:ale_echo_msg_warning_str = '🔔'
+let g:ale_echo_msg_format = '%s% - code%'
 let g:ale_fix_on_save = 1
 let g:airline#extensions#ale#enabled = 1
 let g:ale_list_window_size = 3
@@ -39,7 +39,7 @@ let g:ale_set_quickfix = 0
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = '●'
 let g:ale_sign_warning = '·'
-let g:ale_loclist_msg_format = '%severity% | %s - [%linter%] %code%'
+let g:ale_loclist_msg_format = '%severity% %s - [%linter%]% code%'
 let g:indentLine_char = '┆'
 
 let g:airline#extensions#lsp#enabled = 0
@@ -93,13 +93,13 @@ let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
 
 " Dirty"     : 🗲",
 "Clean"     : ✓",
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified"  : "M",
-    \ "Staged"    : "🗸",
+    \ "Staged"    : "✔",
     \ "Untracked" : "U",
     \ "Renamed"   : "➜",
     \ "Unmerged"  : "═",
-    \ "Clean"     : "🗸",
+    \ "Clean"     : "✔",
     \ 'Ignored'   : '☒',
     \ "Unknown"   : "?"
     \ }

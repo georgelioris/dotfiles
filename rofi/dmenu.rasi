@@ -14,13 +14,14 @@
 }
 
 #window {
+    border-radius: 6px;
     anchor:     north;
     location:   north;
-    width:      50%;
-    x-offset:  -25%;
-    y-offset:   0px;
+    width:      20%;
+    x-offset:  -39.6%;
+    y-offset:   3px;
     children:   [ horibox ];
-    height:     20px;
+    height:     22px;
 }
 
 #horibox {
@@ -42,7 +43,7 @@
 
 #entry {
     expand:     false;
-    width:      10em;
+    width:      5em;
 }
 
 #element {

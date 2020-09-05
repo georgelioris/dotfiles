@@ -110,6 +110,7 @@ export NNN_USE_EDITOR=1
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim="nvim"
 alias ls="ls -hN --color=auto --group-directories-first"
+alias cp="cp -i"
 alias h="cd ~/"
 alias cod="cd ~/code && ls"
 alias js="cd ~/code/js && ls"
@@ -134,13 +135,14 @@ alias xclip="xclip -selection clipboard"
 alias wiki="$EDITOR -c Goyo ~/vimwiki/index.wiki"
 alias todo="$EDITOR ~/vimwiki/Todo.wiki"
 alias workout="$EDITOR ~/vimwiki/Workout.wiki"
-alias feh="feh --image-bg black -Z -."
+alias feh="feh --image-bg black -. "
 alias andromeda="cd /run/media/void/ANDROMEDA"
 alias calypso="cd /run/media/void/CALYPSO"
 alias t="tmuxf"
-alias tmux="TERM=screen-256color tmux"
+alias tmux="TERM=screen-256color tmux -f $HOME/.config/tmux/.tmux.conf"
 alias tinit="cp ~/code/js/boilerplate-configs/.tmux ."
-alias sshpi="ssh alarm@192.168.1.17"
+alias sshpi="ssh -F ~/.ssh/config alarm@192.168.1.17"
+alias jctl="journalctl -p 3 -xb"
 export FZF_TMUX=1
 export FZF_DEFAULT_COMMAND='fd --type f --follow --exclude={.git,node_modules}'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -210,8 +212,34 @@ tmuxf() {
   env SSH_AUTH_SOCK=$SOCK_SYMLINK tmux new -A -s "$SESSION_NAME"
 }
 
-bindkey -s '^o' "rcd\r"
+# Extract file
+ex ()
+{
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1   ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *.deb)       ar x $1      ;;
+      *.tar.xz)    tar xf $1    ;;
+      *.tar.zst)   unzstd $1    ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
 
+
+bindkey -s '^o' "rcd\r"
 # Edit line in vim with ctrl-e
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line

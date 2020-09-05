@@ -1,17 +1,17 @@
 {
   "npm.binPath": "~/.yarn/bin",
   "snippets.extends": {
+    "svelte": ["javascript"],
     "javascriptreact": ["javascript"],
     "typescriptreact": ["javascript"],
     "typescript": ["javascript"],
     "typescript.jsx": ["javascript"]
   },
+  "emmet.includeLanguages": { "svelte": "html" },
   "javascript.implementationsCodeLens.enable": false,
   "javascript.referencesCodeLens.enable": false,
   "typescript.implementationsCodeLens.enable": false,
   "typescript.referencesCodeLens.enable": false,
-  "svelte.plugin.typescript.enable": false,
-  "svelte.plugin.typescript.diagnostics.enable": false,
   "diagnostic.displayByAle": true,
   "suggest.noselect": false,
   "suggest.maxCompleteItemCount": 10,

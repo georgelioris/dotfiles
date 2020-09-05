@@ -59,16 +59,16 @@ function sp-title {
 #
 # string Artist and Title
 function sp-both {
-	title=`eval "sp-title"`
-	artist=`eval "sp-artist"`
+  title=`eval "sp-title"`
+  artist=`eval "sp-artist"`
 
-	# If song title is too long, truncate it
-	if [ ${#title} -gt $CHAR_LENGTH ]; then
-		ntitle=$(echo $title | cut -c1-$CHAR_LENGTH)
-		title=$ntitle'...'
-	fi
+  # If song title is too long, truncate it
+  if [ ${#title} -gt $CHAR_LENGTH ]; then
+    ntitle=$(echo $title | cut -c1-$CHAR_LENGTH)
+    title=$ntitle'...'
+  fi
 
-	echo '♫' $artist '-' $title
+  echo '♫' $artist '-' $title
 }
 
 SPOTIFY_PID="$(pidof -s spotify)"
@@ -96,8 +96,8 @@ else
     # It is. Run it.
     shift
 
-		eval "sp-$subcommand $@"
+    eval "sp-$subcommand $@"
   else
-		echo ""
+    echo ""
   fi
 fi

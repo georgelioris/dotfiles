@@ -1,14 +1,14 @@
-Xft.dpi: 97
+Xft.dpi: 96
 Xft.antialias: true
 Xft.hinting: true
 Xft.rgba: rgb
 Xft.autohint: false
-Xft.hintstyle: hintslight
+Xft.hintstyle: hintfull
 Xft.lcdfilter: lcddefault
 
 ! special
 *.foreground:   #B3B1AD
-*.background:   #0A0E14
+*.background:   #000000
 *.cursorColor:  #C7C7C7
 
 ! black
@@ -43,6 +43,6 @@ Xft.lcdfilter: lcddefault
 *.color7:       #C7C7C7
 *.color15:      #FFFFFF
 
-! *.font: Hack:pixelsize=14:antialias=true:autohint=true
+*.font: Source Code Pro for Powerline:pixelsize=10:antialias=true:autohint=true
 *.alpha: 255
 ! *.boldFont: Hack:pixelsize=14

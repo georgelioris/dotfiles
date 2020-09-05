@@ -30,7 +30,7 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "250x10-8+35"
+    geometry = "540x120-8+35"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -86,7 +86,7 @@
 
     ### Text ###
 
-    font = Noto Sans  10
+    font = Noto Sans 10
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -160,13 +160,13 @@
     ### Icons ###
 
     # Align icons left/right/off
-    icon_position = off
+    icon_position = left
 
     # Scale larger icons down to this size, set to 0 to disable
-    max_icon_size = 32
+    max_icon_size = 96
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+    #icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
 
     ### History ###
 
@@ -262,10 +262,10 @@
 
 [urgency_critical]
     background = "#900000"
-	    foreground = "#ffffff"
-	    frame_color = "#ff0000"
+      foreground = "#ffffff"
+      frame_color = "#ff0000"
     timeout = 0
-    # Icon for notifications with critical urgency, uncomment to enable
+  # Icon for notifications with critical urgency, uncomment to enable
     #icon = /path/to/icon
 
 # Every section that isn't one of the above is interpreted as a rules to
@@ -323,25 +323,35 @@
 
 [powermanager]
      appname = "xfce4-power-manager"
-     icon    = battery*
+     icon = "battery-full"
      format = "%b"
 
 [full]
      appname = "xfce4-power-manager"
-     icon = battery-full-*
-     format = "<b></b> Fully Charged"
+     icon = "battery-full-charged"
+     format = "<b></b> Fully Charged"
 
 [charging]
      appname = "xfce4-power-manager"
      icon = *charging
-     format = "<b></b> Charging <b>%p</b>"
+     format = "<b></b>  Charging"
 
 [pa-applet]
     appname = "pa-applet"
     summary = "pa-applet"
     format = "<b> </b>Volume<b> %p</b>"
 
-[Spotify]
-    appname = Spotify
-    format = "<b> %s</b>\n %b"
+[mute]
+    appname = "pa-applet"
+    summary = "pa-applet"
+    icon = "audio-volume-muted"
+    format = "<b>  </b>Muted"
+
+[spotify]
+    appname = "Spotify"
+    format = "<span font_desc='Noto Sans 12'><b>%s</b></span>\n%p%b"
+    background = "#121212"
+    foreground = "#c9c8c5"
+    frame_color = "#c9c8c5"
+
 # vim: ft=cfg
