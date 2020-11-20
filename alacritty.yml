@@ -169,8 +169,8 @@ debug:
 colors:
   # Default colors
   primary:
-    #background: '0x0a0e14'
-    background: '0x080707'
+    # background: '0x0a0c0e'
+    background: '0x1e1e1e'
     foreground: '0xB3B1AD'
 
   # Normal colors
@@ -248,7 +248,7 @@ bell:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 0.95
+background_opacity: 1
 
 # Mouse bindings
 #

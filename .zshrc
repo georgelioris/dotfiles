@@ -5,6 +5,7 @@
 export ZSH=$HOME/.oh-my-zsh
 path+=('/home/void/bin/scripts')
 path+=('/home/void/.yarn/bin')
+path+=('/home/void/.local/bin')
 #path+=('/home/void/.yarn/bin')
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -22,7 +23,8 @@ ZSH_THEME="spaceship"
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=13
+UPDATE_ZSH_DAYS=13
+DISABLE_UPDATE_PROMPT=true
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
 
@@ -109,7 +111,7 @@ export NNN_USE_EDITOR=1
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim="nvim"
-alias ls="ls -hN --color=auto --group-directories-first"
+alias ls="lsd -h --icon=never --group-dirs=first"
 alias cp="cp -i"
 alias h="cd ~/"
 alias cod="cd ~/code && ls"
@@ -127,7 +129,7 @@ alias confzsh="$EDITOR ~/.zshrc"
 alias yt="mpsyt"
 alias weather="curl wttr.in/Thessaloniki"
 alias cdc="cd ~-"
-alias l.="ls -d .*"
+alias l.="ls .* -dtl"
 alias c="clear"
 alias pac="sudo pacman"
 alias yank="yank -- xsel -b"
@@ -137,11 +139,12 @@ alias todo="$EDITOR ~/vimwiki/Todo.wiki"
 alias workout="$EDITOR ~/vimwiki/Workout.wiki"
 alias feh="feh --image-bg black -. "
 alias andromeda="cd /run/media/void/ANDROMEDA"
-alias calypso="cd /run/media/void/CALYPSO"
+alias calypso="cd /run/media/void/CLYPSO"
 alias t="tmuxf"
 alias tmux="TERM=screen-256color tmux -f $HOME/.config/tmux/.tmux.conf"
 alias tinit="cp ~/code/js/boilerplate-configs/.tmux ."
-alias sshpi="ssh -F ~/.ssh/config alarm@192.168.1.17"
+# alias sshpi="ssh -F ~/.ssh/config alarm@192.168.1.17"
+# alias sshpi4="ssh -X -F ~/.ssh/config "
 alias jctl="journalctl -p 3 -xb"
 export FZF_TMUX=1
 export FZF_DEFAULT_COMMAND='fd --type f --follow --exclude={.git,node_modules}'
@@ -155,6 +158,7 @@ source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
 #export MESA_GLSL_CACHE_DISABLE=true
 
+paclist() { pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)' }
 ta() { tmux a -t "$(tmux ls | sed  "s/:.*//"  | fzf --reverse --height="10%" +m)" || exit ; }
 tk() { tmux ls | sed  "s/:.*//"  | fzf --reverse --height="10%" | xargs -rI {} tmux kill-session -t "{}" ; }
 cf() { cd "$(du ~/code --exclude={".*","node_*",misc,public} | cut -f2- | sed "s|$HOME/||" | fzf +m | sed "s|^|$HOME/|" )" || exit ; }

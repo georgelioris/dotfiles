@@ -3,20 +3,30 @@
   "snippets.extends": {
     "svelte": ["javascript"],
     "javascriptreact": ["javascript"],
-    "typescriptreact": ["javascript"],
+    "typescriptreact": ["typescript"],
     "typescript": ["javascript"],
-    "typescript.jsx": ["javascript"]
+    "typescript.jsx": ["typescriptreact"]
   },
+  "suggest.snippetIndicator": " ⇌",
+  "snippets.userSnippetsDirectory": "~/.config/coc/textmate",
+  "snippets.textmateSnippetsRoots": ["~/.config/coc/textmate"],
+  "snippets.ultisnips.enable": false,
   "emmet.includeLanguages": { "svelte": "html" },
+  "python.analysis.diagnosticEnabled": false,
+  "python.linting.enabled": false,
+  "python.jediEnabled": false,
+  "codeLens.enable": false,
   "javascript.implementationsCodeLens.enable": false,
   "javascript.referencesCodeLens.enable": false,
   "typescript.implementationsCodeLens.enable": false,
   "typescript.referencesCodeLens.enable": false,
   "diagnostic.displayByAle": true,
   "suggest.noselect": false,
-  "suggest.maxCompleteItemCount": 10,
   "javascript.suggestionActions.enabled": false,
   "javascript.validate.enable": false,
-  "suggest.floatEnable": false,
-  "diagnostic.enable": false
+  "typescript.suggestionActions.enabled": false,
+  "typescript.validate.enable": false,
+  "suggest.floatEnable": true,
+  "diagnostic.enable": false,
+  "signature.enable": true
 }

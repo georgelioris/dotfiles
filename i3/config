@@ -174,10 +174,10 @@ bindsym Mod1+Shift+0 move container to workspace number 10
 
 
 # Assign VSCode to ws2
-assign [class="code"] workspace $space2
+# assign [class="code"] workspace $space2
 
 # Assign discord to ws4
-assign [class="discord"] workspace $space4
+assign [class="discord"] workspace number 4
 
 ###################################################
 #                resize                           #
@@ -231,7 +231,7 @@ exec_always "xinput --set-prop 'SYNA2B2C:01 06CB:7F27 Touchpad' 'libinput Tappin
 exec_always ~/.fehbg &
 exec_always ~/bin/scripts/set_monitors &
 exec_always ~/.config/polybar/launch.sh &
-exec --no-startup-id picom --config ~/.config/picom/picom.conf &
+exec --no-startup-id picom --config ~/.config/picom/picom.conf --experimental-backends &
 #exec_always --no-startup-id flashfocus &
 exec --no-startup-id nm-applet &
 exec --no-startup-id pa-applet &

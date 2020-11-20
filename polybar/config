@@ -21,11 +21,11 @@ secondary = #e60053
 alert = #bd2c40
 [bar/bar2]
 monitor = ${env:MONITOR:}
-width = 19%
+width = 20%
 height = 22
 background = ${colors.background}
 foreground = ${colors.foreground}
-offset-x = 81%:-8
+offset-x = 80%:-8
 offset-y = 3
 override-redirect=true
 radius = 6.0
@@ -51,7 +51,7 @@ cursor-scroll = ns-resize
 
 [bar/bar1]
 monitor = ${env:MONITOR:}
-width = 19%
+width = 20%
 height = 22
 offset-x = 8
 offset-y = 3
