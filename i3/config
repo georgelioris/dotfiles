@@ -1,46 +1,36 @@
 # i3 config file (v4)
-#
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
-#
-# This config file uses keycodes (bindsym) and was written for the QWERTY
-# layout.
-#
-# To get a config file with the same key positions, but for your current
-# layout, use the i3-config-wizard
-#
 
 # Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-#exec --no-startup-id ~/bin/scripts/set_monitors &
 font pango: Noto Sans 10
+# Colors
 # class                 #Border #Backgr #Text   #Indicator #child_border
-client.focused          #202124 #202124 #a0a0a0 #d1d1d1    #1c1c1c
+client.focused          #202124 #202124 #a0a0a0 #d1d1d1    #c9c8c5
 client.focused_inactive #252525 #252525 #252525 #252525    #222222
 client.unfocused        #111111 #111111 #444444 #292d2e
 client.urgent           #bd2c40 #bd2c40 #d1d1d1 #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000
-
 client.background       #ffffff
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
+
 set $bg-color #252525
 set $text-color #33b2b2
-# Before i3 v4.8, we used to recommend this one as the default:
-# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-# The font above is very space-efficient, that is, it looks good, sharp and
-# clear in small sizes. However, its unicode glyph coverage is limited, the old
-# X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
+
 for_window [class="^.*"] border pixel 0
 for_window [instance="border"] border pixel 0
+for_window [instance="calendar"] border pixel 1
 for_window [class=".*"] title_format "  %title"
+for_window [instance="mpv_f"] floating enable
+for_window [instance="mpv_f"] resize set 1600 900
+for_window [instance="mpv_f"] move position center
+for_window [class="feh_f"] floating enable
+for_window [class="feh_f"] resize set 1280 720
+for_window [class="feh_f"] move position center
 floating_maximum_size -1 x 900
-# set
+
+# Gaps
 #smart_gaps on
 gaps inner 8
 gaps outer 0
-gaps top 20
+gaps top 0
 set $term alacritty --config-file ~/.config/alacritty/alacritty.yml
 workspace_layout tabbed
 #workspace $space1 gaps inner 0
@@ -60,6 +50,8 @@ workspace_layout tabbed
 #workspace 9 output HDMI1
 #workspace 10 output HDMI1
 
+bindsym Mod1+b exec ~/bin/scripts/cal.sh
+
 # Vim keys
 set $up k
 set $down j
@@ -70,13 +62,16 @@ set $right l
 floating_modifier Mod1
 
 # start a terminal
-bindsym Mod1+Return exec $term --class "border"
+bindsym Mod1+Return exec $term
 
 # change focus
 bindsym Mod1+$left focus left
 bindsym Mod1+$down focus down
 bindsym Mod1+$up focus up
 bindsym Mod1+$right focus right
+
+bindsym Mod1+p workspace prev
+bindsym Mod1+n workspace next
 
 # alternatively, you can use the cursor keys:
 bindsym Mod1+Left focus left
@@ -108,7 +103,8 @@ bindsym Mod1+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 
 bindsym Mod1+F1 layout toggle splith tabbed
-bindsym Mod1+a layout toggle split
+bindsym Mod1+a workspace prev
+bindsym Mod1+s workspace next
 
 # toggle tiling / floating
 bindsym Mod1+Shift+space floating toggle
@@ -131,8 +127,14 @@ bindsym Mod1+minus scratchpad show
 
 # Set Music Player
 set $music "spotify"
-set $musicscript "~/bin/scripts/dropspot.sh"
+set $musicscript "~/bin/scripts/dropspot.sh spotify"
 set $browser chromium
+
+# Dropdown Calendar
+for_window [instance="calendar"] floating enable
+for_window [instance="calendar"] resize set 175 150
+for_window [instance="calendar"] move position 1745 22
+no_focus [instance="calendar"]
 
 # Dropdown Terminal
 for_window [instance="dropdown"] floating enable
@@ -172,7 +174,6 @@ bindsym Mod1+Shift+8 move container to workspace number 8
 bindsym Mod1+Shift+9 move container to workspace number 9
 bindsym Mod1+Shift+0 move container to workspace number 10
 
-
 # Assign VSCode to ws2
 # assign [class="code"] workspace $space2
 
@@ -202,17 +203,18 @@ bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'Do you really want to exit i
 bindsym Mod1+q kill
 # binding for scratchpad windows
 bindsym Mod1+z exec ~/bin/scripts/dropterm.sh; [instance="dropdown"] scratchpad show;
-bindsym Mod1+m exec $musicscript; [instance=$music] scratchpad show;
+bindsym Mod1+m exec $musicscript;
 # rofi menus
 bindsym Mod1+d exec ~/bin/scripts/rofi.sh
 bindsym Mod1+F7 exec ~/bin/rofi-wifi-menu/rofi-wifi-menu.sh
 bindsym Mod1+F8 exec ~/bin/scripts/prtsc.sh
 bindsym Mod1+F10 exec ~/bin/scripts/monitor_layout.sh
 bindsym Mod1+F12 exec ~/bin/scripts/rofi-power.sh
+bindsym Mod1+F2 exec ~/bin/scripts/rofi-calc.sh
 bindsym Mod1+grave exec ~/bin/scripts/dmenuunicode.sh
 # browser
 bindsym Mod1+w exec $browser
-bindsym Mod1+Shift+w exec $browser --incognito
+bindsym Mod1+Shift+w  exec $browser --incognito
 # lockscreen
 bindsym Mod1+F9 exec betterlockscreen -l dimblur
 bindsym Mod1+r exec thunar
@@ -225,7 +227,7 @@ bindsym Mod1+y exec ~/bin/scripts/mpv.sh
 ###################################################
 
 # Kb layout switching and Caps mapped to ESC
-exec_always "setxkbmap -layout us,gr -option grp:rctrl_toggle,caps:escape"
+exec_always ~/bin/scripts/kbmap.sh &
 # Enable tap to click
 exec_always "xinput --set-prop 'SYNA2B2C:01 06CB:7F27 Touchpad' 'libinput Tapping Enabled' 1"
 exec_always ~/.fehbg &
@@ -237,4 +239,5 @@ exec --no-startup-id nm-applet &
 exec --no-startup-id pa-applet &
 exec --no-startup-id xfce4-power-manager &
 exec --no-startup-id dunst -conf ~/.config/dunst/dunstrc &
+exec --no-startup-id ~/bin/scripts/alternating_layouts.py &
 #exec --no-startup-id mpd &

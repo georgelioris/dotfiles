@@ -10,25 +10,33 @@
 [colors]
 ;background = ${xrdb:color0:#222}
 ;background = #e2000000
-background = #df080707
+background = #df1e1e1e
 ;#bb010101
 background-alt = #aa252525
 ;foreground = ${xrdb:color7:#222}
-foreground = #a9a8a2
+foreground = #c9c8c5
 foreground-alt = #b3b1ad
-primary = #c7c7c7
+primary = #c9c8c5
 secondary = #e60053
 alert = #bd2c40
-[bar/bar2]
+green = #df4EC9B0
+blue = #569CD6
+
+[bar/bar1]
 monitor = ${env:MONITOR:}
-width = 20%
+width = 100%
 height = 22
 background = ${colors.background}
 foreground = ${colors.foreground}
-offset-x = 80%:-8
-offset-y = 3
-override-redirect=true
-radius = 6.0
+line-size = 2
+enable-ipc = true
+; tray-position = right
+; tray-padding = 2
+; tray-background = ${background}
+; offset-x = 8
+; offset-y = 4
+; override-redirect=true
+; radius = 6.0
 fixed-center = true
 font-0 = IBM Plex Sans:size=10:antialias=true;2
 font-1 = Siji:pixelsize=10;1
@@ -36,78 +44,25 @@ font-2 = JoyPixels:pixelsize=1;1
 font-3 = IBM Plex Sans:size=10:antialias=ture:weight=SemiBold;2
 font-4 = Weather Icons:pixelsize=9:antialias=true;2
 dpi = 96
-modules-left =
-modules-center =
-modules-right = xkeyboard d weather d volume temperature wlan battery date
-padding-left = 0
-padding-right = 5
-
-module-margin-left = 1
-module-margin-right = 1
-wm-restack=i3
-
-cursor-click = pointer
-cursor-scroll = ns-resize
-
-[bar/bar1]
-monitor = ${env:MONITOR:}
-width = 20%
-height = 22
-offset-x = 8
-offset-y = 3
-override-redirect=true
-radius = 6.0
-fixed-center = true
-; separator = %{F#757575}|%{F-}
-
-background = ${colors.background}
-foreground = ${colors.foreground}
-
-line-size = 2
-line-color = #f00
-
-border-size = 0
-border-color = #000000
-
-padding-left = 3
-padding-right = 0
-
-module-margin-left = 1
-module-margin-right = 1
-
-font-0 = IBM Plex Sans:size=10:antialias=true;2
-font-1 = Siji:pixelsize=10;1
-font-2 = JoyPixels:pixelsize=1;1
-font-3 = IBM Plex Sans:size=10:antialias=ture:weight=SemiBold;2
-; font-2 = Material Icons:pixelsize=10
-dpi = 96
+; modules-left =
 modules-left = i3 xwindow
 modules-center =
-modules-right =
+modules-right = xkeyboard d weather d bluetooth volume temperature wlan battery date
+padding-left = 1
+padding-right = 2
 
-;tray-position = right
-;tray-padding = 2
-;tray-transparent = true
-;tray-background = #0063ff
-
-;wm-restack = bspwm
-wm-restack = i3
-
-;override-redirect = true
-
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
+module-margin-left = 1
+module-margin-right = 1
+wm-restack= i3
 
 cursor-click = pointer
 cursor-scroll = ns-resize
+
 
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:30:...%
-format-foreground = #757575
+format-foreground = #808080
 format-prefix = "%{F#4d4d4d}%{F-}  "
 
 [module/xkeyboard]
@@ -178,9 +133,9 @@ label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
 label-focused = %name%
-label-focused-background = ${colors.background}
-label-focused-foreground = ${colors.primary}
-label-focused-underline = ${colors.foreground}
+label-focused-background = ${colors.green}
+label-focused-foreground = ${colors.background}
+label-focused-underline = ${colors.background}
 label-focused-padding = 3
 label-focused-font = 4
 
@@ -261,7 +216,7 @@ type = internal/network
 interface = wlp2s0
 interval = 3.0
 
-format-connected = %{A1:~/bin/scripts/rofi-wifi &:}%{A3:nm-connection-editor:}<ramp-signal>%{A}%{A}
+format-connected = %{A1:~/bin/scripts/rofi-wifi &:}%{A3:setsid -f nm-connection-editor:}<ramp-signal>%{A}%{A}
 ;format-connected-underline = #9f78e1
 label-connected = %essid%
 format-disconnected = %{A1:~/bin/scripts/rofi-wifi:}%{A3:nm-connection-editor:}<label-disconnected>%{A}%{A}
@@ -305,7 +260,7 @@ time =  %{T4}%a %{F#686868}%{F#} %I:%M %p
 format-prefix-foreground = ${colors.foreground-alt}
 ;format-underline = #0a6cf5
 
-label = %date% %time%
+label = %{A3:~/bin/scripts/cal.sh:}%date% %{A} %{A3:~/bin/scripts/cal.sh:}%time% %{A}
 
 [module/volume]
 type = internal/alsa
@@ -346,7 +301,7 @@ ramp-volume-2 = 
 ramp-volume-3 = 
 ramp-volume-4 = 
 ramp-volume-5 = 
-ramp-volume-foreground = #FFB454
+ramp-volume-foreground = #afafaf
 
 [module/battery]
 type = internal/battery
@@ -357,9 +312,9 @@ full-at = 98
 format-charging = %{A3:xfce4-power-manager-settings:}<animation-charging> <label-charging>%{A}
 ; format-charging-underline = #91B362
 
-format-discharging = %{A3:xfce4-power-manager-settings:} <ramp-capacity> <label-discharging>%{A}
+format-discharging = %{A3:setsid -f xfce4-power-manager-settings:} <ramp-capacity> <label-discharging>%{A}
 ;format-discharging-underline = #F9AF4F
-label-full = "%{A3:xfce4-power-manager-settings:}%{F#516732}%{F#C2D94C}   %{F-}%{A}"
+label-full = "%{A3:setsid -f xfce4-power-manager-settings:}%{F#516732}%{F#C2D94C}   %{F-}%{A}"
 ; format-full-prefix-foreground = #C2D94C
 ;format-full-underline = ${self.format-charging-underline}
 format-charging-prefix = ""
@@ -385,6 +340,7 @@ animation-charging-framerate = 750
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
+base-temperature = 20
 warn-temperature = 47
 
 format = %{A1:notify-send " CPU" $(sensors | grep temp1 | cut -d '+' -f 2 | tail -1):}<ramp>%{A}
@@ -397,29 +353,10 @@ label = %temperature-c%
 label-warn = %temperature-c%
 ; label-warn-foreground = ${colors.secondary}
 
-ramp-0 = 
-ramp-1 = 
+ramp-0 = %{F#569CD6}%{F-}
+ramp-1 = %{F#CE9178}%{F-}
 ramp-2 = 
 ramp-foreground = #F07178
-
-[module/powermenu]
-type = custom/menu
-
-expand-right = true
-
-format-spacing = 1
-
-label-open = 
-label-open-foreground = #cfcfcf
-label-close = cancel
-label-close-foreground = ${colors.secondary}
-label-separator = |
-label-separator-foreground = ${colors.foreground-alt}
-
-menu-0-0 = reboot
-menu-0-0-exec = reboot
-menu-0-1 = power off
-menu-0-1-exec = poweroff
 
 
 [settings]
@@ -453,5 +390,12 @@ format-prefix = %{F#C594C5}%{T2}%{T-}%{F-}
 format-prefix-padding = 1
 label-font = 1
 
+[module/bluetooth]
+type = custom/ipc
+hook-0 = ~/bin/scripts/bluetooth.sh status
+hook-1 = setsid -f ~/bin/scripts/bluetooth.sh toggle
+click-left = polybar-msg -p %pid% hook bluetooth 2
+initial = 1
+label-font = 2
 
 ; vim:ft=dosini

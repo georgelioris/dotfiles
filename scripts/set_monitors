@@ -1,8 +1,11 @@
-#!/usr/bin/env bash
-hdmi=($(xrandr --query | grep "HDMI1" | cut -d" " -f2))
+#!/usr/bin/bash
+export DISPLAY=:0
+
+hdmi=$(xrandr -d :0 | grep "HDMI1" | cut -d" " -f2)
+
 if [ "$hdmi" == "connected" ];
 then
-	xrandr --output HDMI1 --auto --output eDP1 --off &
+  xrandr -d :0 --output HDMI1 --auto --output eDP1 --off
   else
-	xrandr --output eDP1 --auto &
+  xrandr --auto
 fi

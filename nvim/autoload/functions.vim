@@ -96,9 +96,14 @@ if g:the_tree_is_open == 1
     NERDTreeToggleVCS
     let g:the_tree_is_open = 0
 elseif (g:the_tree_is_open == 0 && ( expand('%') != '' ))
-    NERDTreeFind %:p
+    let is_git = system('git status')
+    if v:shell_error
+      NERDTreeToggle %
+    else
+      NERDTreeFind %:p
+    endif
     let g:the_tree_is_open = 1
-  else
+else
     echohl ALEVirtualTextWarning | echo "Can't open NERDTree here!" | echohl None
 endif
 endfunction

@@ -102,6 +102,7 @@ export KEYTIMEOUT=1
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 export NNN_USE_EDITOR=1
+export BC_ENV_ARGS=$HOME/.config/.bcrc
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -112,6 +113,7 @@ export NNN_USE_EDITOR=1
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim="nvim"
 alias ls="lsd -h --icon=never --group-dirs=first"
+alias la="lsd -lAh --icon=never --group-dirs=first"
 alias cp="cp -i"
 alias h="cd ~/"
 alias cod="cd ~/code && ls"
@@ -164,7 +166,7 @@ tk() { tmux ls | sed  "s/:.*//"  | fzf --reverse --height="10%" | xargs -rI {} t
 cf() { cd "$(du ~/code --exclude={".*","node_*",misc,public} | cut -f2- | sed "s|$HOME/||" | fzf +m | sed "s|^|$HOME/|" )" || exit ; }
 copy() { cp -v "$1" "$(awk '{print $1}'  ~/.config/bmdirs | fzf --reverse --height="20%" +m | sed "s|~|$HOME|")" ; }
 cdf() { cd ."$(du --exclude={"node_*","*/.*","Downloads"} | cut -d'.' -f2- | fzf-tmux --reverse --height="50%" +m )" ; }
-se() { $EDITOR "$( du -a ~/.config ~/bin/scripts --exclude-from=$HOME/.fzfignore | cut -f2- | sed "s|$HOME/\.config/|>|g" | fzf +m | sed "s|>|$HOME/.config/|")" ; }
+se() { DIR="$( du -a ~/.config ~/bin/scripts --exclude-from=$HOME/.fzfignore | cut -f2- | sed "s|$HOME/\.config/|>|g" | fzf +m | sed "s|>|$HOME/.config/|")"; [ $DIR ] && $EDITOR $DIR ; }
 rcd() { ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR" ; }
 setwall() { fd --type f . ~/Pictures/Wallpapers/ | fzfimg | xargs -I {} feh --bg-fill "{}" }
 fbr() {

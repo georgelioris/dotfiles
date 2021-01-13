@@ -4,6 +4,7 @@
 
     # Which monitor should the notifications be displayed on.
     monitor = 0
+    corner_radius = 3
 
     # Display notification on focused monitor.  Possible modes are:
     #   mouse: follow mouse pointer
@@ -30,7 +31,7 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "540x120-8+35"
+    geometry = "540x120-6+28"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -73,7 +74,7 @@
     #  * foreground: use the same color as the foreground;
     #  * frame: use the same color as the frame;
     #  * anything else will be interpreted as a X color.
-    separator_color = frame
+    separator_color = #77756e
 
     # Sort messages by urgency.
     sort = yes
@@ -246,24 +247,25 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#dfdfdf"
-    foreground = "#252525"
+    background = "#c9c8c5"
+    foreground = "#121212"
+    frame_color= "#dfdfdf"
     timeout = 5
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_normal]
-    background = "#262626"
-    foreground = "#dfdfdf"
-    frame_color= "#111111"
+    background = "#dfdfdf"
+    foreground = "#252525"
+    frame_color= "#dfdfdf"
     timeout = 5
     # Icon for notifications with normal urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_critical]
     background = "#900000"
-      foreground = "#ffffff"
-      frame_color = "#ff0000"
+    foreground = "#ffffff"
+    frame_color = "#ff0000"
     timeout = 0
   # Icon for notifications with critical urgency, uncomment to enable
     #icon = /path/to/icon
@@ -324,22 +326,22 @@
 [powermanager]
      appname = "xfce4-power-manager"
      icon = "battery-full"
-     format = "%b"
+     format = "<b>%s</b>\n%b"
 
 [full]
      appname = "xfce4-power-manager"
      icon = "battery-full-charged"
-     format = "<b></b> Fully Charged"
+     format = " <b>%s\n</b>%b"
 
 [charging]
      appname = "xfce4-power-manager"
-     icon = *charging
-     format = "<b></b>  Charging"
+     body = *charging
+     format = " <b>%s\n</b>%b"
 
 [pa-applet]
     appname = "pa-applet"
     summary = "pa-applet"
-    format = "<b> </b>Volume<b> %p</b>"
+    format = "<b>  </b>Volume<b> %p</b>"
 
 [mute]
     appname = "pa-applet"
@@ -350,8 +352,12 @@
 [spotify]
     appname = "Spotify"
     format = "<span font_desc='Noto Sans 12'><b>%s</b></span>\n%p%b"
-    background = "#121212"
-    foreground = "#c9c8c5"
+    background = "#c9c8c5"
+    foreground = "#121212"
     frame_color = "#c9c8c5"
+
+[bluetooth]
+    appname = "blueman"
+    format = " <b>%s</b>\n %b"
 
 # vim: ft=cfg

@@ -4,9 +4,9 @@
  * Licence: MIT
  */
 * {
-    background-color:      Black;
-    border-color:          #0a0c0e;
-    text-color:            #f0a0c0;
+    background-color:      rgba(0, 0, 0, 0);
+    /* border-color:          #0a0c0e; */
+    text-color:            #c9c8c5;
     font:            "Noto Sans 10";
     padding: 0;
     margin: 0;
@@ -14,14 +14,13 @@
 }
 
 #window {
-    border-radius: 6px;
     anchor:     north;
     location:   north;
-    width:      20%;
-    x-offset:  -39.6%;
-    y-offset:   3px;
+    width:      50%;
+    x-offset:   -25%;
+    y-offset:   0px;
     children:   [ horibox ];
-    height:     22px;
+    height:     20px;
 }
 
 #horibox {
@@ -30,9 +29,9 @@
 }
 
 #prompt{
-    background-color: #302028;
-    text-color:       #dad085;
-    padding:        0px 8px 0px 5px;
+    background-color: #4EC9B0;
+    text-color:       #000000;
+    padding:        0px 12px 0px 12px;
 }
 
 #listview {
@@ -43,14 +42,16 @@
 
 #entry {
     expand:     false;
-    width:      5em;
+    width:      13em;
+    padding: 0px 0px 0px 10px;
+    background-color: #1e1e1e;
 }
 
 #element {
-    padding: 0px 8px;
-    text-color:      #dad085;
+    padding: 0px 10px 0px 0px;
+    text-color:      #c9c8c5;
 }
 #element selected {
-    background-color: #302028;
-    text-color:       #f0a0c0;
+    background-color : #9CDCFE;
+    text-color:       #000000;
 }

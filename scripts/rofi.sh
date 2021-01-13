@@ -1,3 +1,3 @@
-rofi -modi window,drun,run \
+rofi -modi window,drun,run,ssh \
 -show drun \
 -theme /usr/share/rofi/themes/rt.rasi

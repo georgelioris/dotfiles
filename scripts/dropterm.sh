@@ -6,7 +6,7 @@
 
 DROP=$(pgrep -axfc "alacritty --class dropdown --config-file /home/void/.config/alacritty/drop.yml")
 
-if [ $DROP -gt 0 ]
+if [ "$DROP" -gt 0 ]
  then
    exit 1
   else

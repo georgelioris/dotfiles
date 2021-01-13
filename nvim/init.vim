@@ -1,18 +1,19 @@
 syntax on
-set relativenumber
+set number relativenumber
 set nowrap
 filetype plugin indent on
 let mapleader = "\<Space>"
 set ruler
 set title
 "set showcmd
-set tabstop=2
-set shiftwidth=0
+set tabstop=2 softtabstop=2
+set shiftwidth=2
 set expandtab
 set foldmethod=manual
 set foldlevelstart=99
 set fcs=eob:\  " Hide EndOfBuffer fillchar
 set mouse=a
+set scrolloff=8
 set ignorecase
 set smartcase
 set hidden
@@ -25,7 +26,7 @@ set undolevels=1000
 set encoding=utf-8
 set signcolumn=yes
 set list
-set listchars=tab:⮩\ ,trail:·,nbsp:⎵
+set listchars=tab:··,trail:·,nbsp:⎵
 set formatoptions-=cro
 let &showbreak = ' ⸥'
 
@@ -67,11 +68,6 @@ Plug 'machakann/vim-highlightedyank'
 " Initialize plugin system
 call plug#end()
 
-source ~/.config/nvim/color.vim
-source ~/.config/nvim/editor.vim
-source ~/.config/nvim/terminal.vim
-source ~/.config/nvim/fzf.vim
-
 " Custom Mappings
 map <F1> :Help <CR>
 map <F2> :History <CR>
@@ -108,8 +104,6 @@ nnoremap J :m .+1<CR>==
 nnoremap K :m .-2<CR>==
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
-nnoremap <TAB> :bnext<CR>
-nnoremap <S-TAB> :bprevious<CR>
 nnoremap <down> :cnext<CR>
 nnoremap <up> :cprev<CR>
 
@@ -204,7 +198,8 @@ autocmd! User GoyoLeave nested call functions#goyo_leave()
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 au! BufWritePost *.vim source %
 au! FileType qf set norelativenumber number wrap nolist
-au BufRead,BufEnter *.png,*.jpg,*.jpeg :terminal ueimg %:p
+" Open images with feh
+au BufEnter *.png,*.jpg,*.jpeg,*.ico :silent exec ':!setsid -f feh --class feh_f --image-bg black -. %:p' | :keepalt b #
 " autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank('Substitute', 200)
 command! -nargs=? Fold :call CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call CocAction('runCommand', 'editor.action.organizeImport')

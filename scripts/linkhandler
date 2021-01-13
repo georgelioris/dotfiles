@@ -3,21 +3,50 @@
 # Feed script a url or file location.
 # If an image, it will view in sxiv,
 # if a video or gif, it will view in mpv
+# TODO
 # if a music file or pdf, it will download,
 # otherwise it opens link in browser.
-
 # If no url given. Opens browser. For using script as $BROWSER.
 BROWSER="chromium"
 [ -z "$1" ] && { "$BROWSER"; exit; }
 
+focus_win (){
+    WIN_ID="$(wmctrl -lp | grep "$1" | awk '{print $1}')"
+    wmctrl -ia "$WIN_ID"
+}
+
+# If a process is running for the current file then focus the window, else fetch from url
+# For images check if the image has been cached then open from cache, else fetch from url
+
 case "$1" in
-	*mkv|*webm|*mp4|*youtube.com/watch*|*youtube.com/playlist*|*youtu.be*|*gif|*mp3|*gifv|*clips.twitch.tv*)
-		notify-send " Newsboat" "Loading video..." -t 1500 && setsid -f mpv -quiet "$1" >/dev/null 2>&1 ;;
-	*png|*jpg|*jpe|*jpeg)
-		notify-send " Newsboat" "Loading image..." -t 1500 && curl -sL "$1" > "/tmp/$(echo "$1" | sed "s/.*\///")" && feh --image-bg black -. "/tmp/$(echo "$1" | sed "s/.*\///")"  >/dev/null 2>&1 & ;;
-	# *mp3|*flac|*opus|*mp3?source*)
-	# 	setsid -f tsp curl -LO "$1" >/dev/null 2>&1 ;;
-	*)
-		if [ -f "$1" ]; then "$TERMINAL" -e "$EDITOR $1"
-	else setsid -f "$BROWSER" "$1" >/dev/null 2>&1; fi ;;
+  *mkv|*webm|*mp4|*youtube.com/watch*|*youtube.com/playlist*|*youtu.be*|*gif|*mp3|*gifv|*clips.twitch.tv*|*twitch.tv/*)
+  URL="$(echo "$1" | sed 's|?|\\?|g; s|=|\\=|g')"
+  GET_PID="$(pgrep -f "^mpv.*$URL")"
+  if [ -n "$GET_PID" ]
+  then
+    focus_win "$GET_PID"
+  else
+    notify-send " mpv" "Loading video..." -t 1500 ; mpv --x11-name=mpv_f -quiet "$1" >/dev/null 2>&1 || notify-send " Error" " Video not found\!" -t 1500 &
+  fi
+  ;;
+  *png|*jpg|*jpe|*jpeg)
+  IMG_FILE="/tmp/$(echo "$1" | sed "s/.*\///")"
+  GET_PID="$(pgrep -f "^feh.*$IMG_FILE")"
+  if [ -n "$GET_PID" ]
+  then
+    focus_win "$GET_PID"
+  elif [ -e "$IMG_FILE" ]
+  then
+    feh --image-bg black -. "$IMG_FILE" >/dev/null 2>&1 &
+  else
+    notify-send " feh" "Loading image..." -t 1500 ; curl -sL "$1" > "$IMG_FILE" && feh --image-bg black -. "$IMG_FILE" >/dev/null 2>&1 &
+  fi
+  ;;
+  # *mp3|*flac|*opus|*mp3?source*)
+  #   setsid -f tsp curl -LO "$1" >/dev/null 2>&1 ;;
+  *)
+    if [ -f "$1" ]; then "$TERMINAL" -e "$EDITOR $1"
+    else notify-send " $BROWSER" "Opening url..." && setsid -f "$BROWSER" "$1" >/dev/null 2>&1;
+    fi
+  ;;
 esac

@@ -10,6 +10,7 @@ let g:ale_linters = {
 \   'json': ['jsonlint'],
 \   'svelte': ['stylelint', 'eslint'],
 \   'python': ['pylint'],
+\   'sh': ['shellcheck'],
 \}
 
 let g:ale_linter_aliases = {'jsx': ['javascript'], 'svelte': ['css', 'javascript'], 'tsx': ['typescript']}
