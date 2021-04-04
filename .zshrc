@@ -163,7 +163,7 @@ source /usr/share/fzf/key-bindings.zsh
 paclist() { pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)' }
 ta() { tmux a -t "$(tmux ls | sed  "s/:.*//"  | fzf --reverse --height="10%" +m)" || exit ; }
 tk() { tmux ls | sed  "s/:.*//"  | fzf --reverse --height="10%" | xargs -rI {} tmux kill-session -t "{}" ; }
-cf() { cd "$(du ~/code --exclude={".*","node_*",misc,public} | cut -f2- | sed "s|$HOME/||" | fzf +m | sed "s|^|$HOME/|" )" || exit ; }
+cf() { cd "$(du ~/code --exclude={".*","node_*",misc,public,vendor} | cut -f2- | sed "s|$HOME/||" | fzf +m | sed "s|^|$HOME/|" )" || exit ; }
 copy() { cp -v "$1" "$(awk '{print $1}'  ~/.config/bmdirs | fzf --reverse --height="20%" +m | sed "s|~|$HOME|")" ; }
 cdf() { cd ."$(du --exclude={"node_*","*/.*","Downloads"} | cut -d'.' -f2- | fzf-tmux --reverse --height="50%" +m )" ; }
 se() { DIR="$( du -a ~/.config ~/bin/scripts --exclude-from=$HOME/.fzfignore | cut -f2- | sed "s|$HOME/\.config/|>|g" | fzf +m | sed "s|>|$HOME/.config/|")"; [ $DIR ] && $EDITOR $DIR ; }

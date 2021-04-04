@@ -8,10 +8,12 @@ let g:ale_linters = {
 \   'jsx': ['eslint'],
 \   'reason': ['reason-language-server'],
 \   'json': ['jsonlint'],
-\   'svelte': ['stylelint', 'eslint'],
+\   'svelte': ['prettier', 'eslint'],
 \   'python': ['pylint'],
 \   'sh': ['shellcheck'],
+\   'php': ['intelephense', 'prettier']
 \}
+"  'php': ['intelephense', 'phpcs']
 
 let g:ale_linter_aliases = {'jsx': ['javascript'], 'svelte': ['css', 'javascript'], 'tsx': ['typescript']}
 let g:ale_fixers = {
@@ -20,13 +22,30 @@ let g:ale_fixers = {
 \   'typescript': ['prettier', 'eslint'],
 \   'typescriptreact': ['prettier', 'eslint'],
 \   'graphql': ['prettier'],
-\   'jsx': ['prettier'],
+\   'jsx': ['prettier', 'eslint'],
 \   'json': ['prettier'],
-\   'css': ['prettier', 'stylelint'],
+\   'css': ['prettier'],
 \   'reason': ['refmt'],
 \   'svelte': ['prettier', 'eslint'],
-\   'python': ['autopep8']
+\   'python': ['autopep8'],
+\   'php': ['prettier'],
+\   'blade': ['blade-formatter'],
+\   'html': ['prettier']
 \}
+" 'php': ['phpcbf']
+
+" Formatting for laravel
+function! FormatBlade(buffer) abort
+    return {
+    \   'command': 'blade-formatter --stdin'
+    \}
+endfunction
+
+execute ale#fix#registry#Add('blade-formatter', 'FormatBlade', ['blade'], 'Apply blade-formatter to a file.')
+let g:ale_php_intelephense_executable="intelephense"
+let g:ale_php_phpcs_executable = '/home/void/.composer/vendor/bin/phpcs'
+let g:ale_php_phpcbf_executable = '/home/void/.composer/vendor/bin/phpcbf'
+let g:ale_php_psalm_executable = '/home/void/.composer/vendor/bin/psalm'
 let g:ale_javascript_eslint_executable = 'yarn run eslint_d'
 let g:ale_javascript_eslint_options = '--cache'
 let g:ale_json_jsonlint_use_global = 1

@@ -50,8 +50,6 @@ workspace_layout tabbed
 #workspace 9 output HDMI1
 #workspace 10 output HDMI1
 
-bindsym Mod1+b exec ~/bin/scripts/cal.sh
-
 # Vim keys
 set $up k
 set $down j
@@ -128,7 +126,7 @@ bindsym Mod1+minus scratchpad show
 # Set Music Player
 set $music "spotify"
 set $musicscript "~/bin/scripts/dropspot.sh spotify"
-set $browser chromium
+set $browser chromium --force-dark-mode
 
 # Dropdown Calendar
 for_window [instance="calendar"] floating enable

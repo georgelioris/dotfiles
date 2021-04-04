@@ -24,6 +24,7 @@ let l:runtimes = {
   \ 'typescript': {'term': l:nodemon . ' --exec deno run', 'pager': 'NO_COLOR=true deno run' },
   \ 'typescriptreact': {'term': l:nodemon . ' --exec deno run', 'pager': 'NO_COLOR=true deno run' },
   \ 'python': {'term': l:nodemon . ' --exec python', 'pager': 'python' },
+  \ 'php': {'term': l:nodemon . ' --exec php', 'pager': 'php' },
   \}
 let l:cmd = has_key(l:runtimes, &filetype)
   if (l:cmd && a:term)
@@ -149,3 +150,19 @@ function! functions#SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
+
+" php hl-group overrides
+function! functions#PhpSyntaxOverride()
+  hi phpFnArgs guifg=red guibg=NONE gui=NONE
+  hi! link phpFunction Function
+  hi! link phpFunctions Special
+  hi! link phpKeyword Statement
+  hi! link phpIdentifier Normal
+  hi! link phpParentOnly Identifier
+endfunction
+
+" blade file formatting with prettier
+function! functions#BladeFormating()
+ let b:ale_javascript_prettier_use_global = 1
+ let b:ale_javascript_prettier_options = "--parser html"
+endfunction

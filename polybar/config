@@ -398,4 +398,12 @@ click-left = polybar-msg -p %pid% hook bluetooth 2
 initial = 1
 label-font = 2
 
+[module/livepods]
+type = custom/script
+exec = ~/bin/scripts/BtBattery.py 41:42:D8:9C:D6:1C.2
+exec-if = bluetoothctl info 41:42:D8:9C:D6:1C | grep "Connected: yes"
+interval = 1800
+label-font = 1
+format = %{F#569CD6} %{F-}<label>
+format-label-foreground = ${colors.foreground}
 ; vim:ft=dosini

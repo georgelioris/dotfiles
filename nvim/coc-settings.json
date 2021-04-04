@@ -7,11 +7,26 @@
     "typescript": ["javascript"],
     "typescript.jsx": ["typescriptreact"]
   },
+  "stylelint.configOverrides": {
+    "rules": {
+      "unit-allowed-list": ["px", "em", "deg", "rem", "vw", "vh", "%"]
+    }
+  },
+  "languageserver": {
+    "intelephense": {
+      "command": "intelephense",
+      "args": ["--stdio"],
+      "filetypes": ["php"],
+      "initializationOptions": {
+        "storagePath": "/tmp/intelephense"
+      }
+    }
+  },
   "suggest.snippetIndicator": " ⇌",
   "snippets.userSnippetsDirectory": "~/.config/coc/textmate",
   "snippets.textmateSnippetsRoots": ["~/.config/coc/textmate"],
   "snippets.ultisnips.enable": false,
-  "emmet.includeLanguages": { "svelte": "html" },
+  "emmet.includeLanguages": { "svelte": "html", "blade": "html" },
   "python.analysis.diagnosticEnabled": false,
   "python.linting.enabled": false,
   "python.jediEnabled": false,

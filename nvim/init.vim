@@ -62,6 +62,8 @@ Plug 'gruvbox-community/gruvbox'
 " Plug 'reasonml-editor/vim-reason-plus', {'for': 're'}
 Plug 'xabikos/vscode-react'
 Plug 'machakann/vim-highlightedyank'
+Plug 'jwalton512/vim-blade', {'for': ['blade']}
+Plug 'StanAngeloff/php.vim', {'for': ['php']}
 " Plug 'jparise/vim-graphql', {'for': 'gql'}
 " Plug 'jelera/vim-javascript-syntax', {'for': ['js', 'jsx']}
 " Plug 'pangloss/vim-javascript', {'for': ['js', 'jsx']}
@@ -181,6 +183,11 @@ set pyx=3
 let g:python_host_prog = '/bin/python2'
 let g:python3_host_prog = '/bin/python3'
 
+let g:php_var_selector_is_identifier = 1
+let g:php_version_id = 80003
+
+let g:AutoPairsFlyMode = 1
+
 " Use <c-space> to trigger completion.
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
@@ -206,3 +213,9 @@ command! -nargs=0 OR   :call CocAction('runCommand', 'editor.action.organizeImpo
 command! -nargs=0 SO   :so ~/.config/nvim/init.vim
 command! -nargs=0 BD   :call functions#BD()
 command! TreeToggle :call functions#TreeToggle()
+augroup phpSettings
+  autocmd!
+  autocmd FileType php call functions#PhpSyntaxOverride()
+  autocmd FileType blade call functions#BladeFormating()
+  autocmd BufNewFile,BufRead *.php set iskeyword+=$
+augroup END
